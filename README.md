@@ -1,4 +1,4 @@
-# 💫 About Me:
+
 🔭 I’m currently working on creating a SAAS Platform known as Pro-Techt<br>👯 Coding, creating and expanding my horizons<br>🤓 Machine Learning enthusiast <br>🌱 I’m currently learning Andrew NG's Machine Learning specialization course from Stanford<br>
 
 
