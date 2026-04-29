@@ -257,65 +257,46 @@
 
 ## Interactive Console
 
-<details open>
-  <summary><b>Run: profile --why-ml</b></summary>
-  <br />
-
-```txt
-> profile --why-ml
-
-Goal:
-  Build ML systems that are useful outside notebooks.
-
-Belief:
-  Good ML work = clean data + honest metrics + failure analysis + usable interface.
-
-Current direction:
-  AI agents, data pipeline debugging, RAG, model evaluation, product-grade demos.
-```
-</details>
-
-<details>
-  <summary><b>Run: project --collaborate</b></summary>
-  <br />
-
-```txt
-> project --collaborate
-
-Send:
-  problem statement
-  dataset shape or sample
-  target metric
-  constraints
-  expected output
-
-Best fit:
-  ML experiments
-  agent environments
-  data tools
-  evaluation dashboards
-```
-</details>
+<table>
+  <tr>
+    <td width="33%" valign="top">
+      <h3><code>profile --why-ml</code></h3>
+      <p>
+        <img src="https://img.shields.io/badge/Goal-Useful%20ML%20Systems-22c55e?style=flat-square" alt="Goal" />
+      </p>
+      <p>Build ML systems that are useful outside notebooks.</p>
+      <p><b>Belief:</b> good ML work means clean data, honest metrics, failure analysis, and a usable interface.</p>
+      <p><b>Direction:</b> agents, data pipeline debugging, RAG, evaluation, and product-grade demos.</p>
+    </td>
+    <td width="33%" valign="top">
+      <h3><code>project --collaborate</code></h3>
+      <p>
+        <img src="https://img.shields.io/badge/Input-Clear%20Problem-2563eb?style=flat-square" alt="Input" />
+      </p>
+      <p><b>Send:</b> problem statement, dataset shape, target metric, constraints, and expected output.</p>
+      <p><b>Best fit:</b> ML experiments, agent environments, data tools, and evaluation dashboards.</p>
+      <p><b>Output:</b> practical prototype, clean repo, measurable result.</p>
+    </td>
+    <td width="33%" valign="top">
+      <h3><code>learning --roadmap</code></h3>
+      <p>
+        <img src="https://img.shields.io/badge/Mode-Deep%20Learning-0f766e?style=flat-square" alt="Mode" />
+      </p>
+      <p><b>Now:</b> supervised ML, validation design, agent environments, RAG quality, observability.</p>
+      <p><b>Next:</b> stronger public ML repos, cleaner demos, measurable benchmarks, deployment-ready examples.</p>
+      <p><b>Rule:</b> learn by building systems with visible outputs.</p>
+    </td>
+  </tr>
+</table>
 
 <details>
-  <summary><b>Run: learning --roadmap</b></summary>
+  <summary><b>Open command glossary</b></summary>
   <br />
-
-```txt
-> learning --roadmap
-
-Now:
-  supervised ML fundamentals
-  evaluation and validation design
-  agent environment design
-  RAG quality and observability
-
-Next:
-  stronger public ML repos
-  cleaner demos
-  measurable benchmarks
-  deployment-ready examples
-```
+  <table>
+    <tr><td><code>profile --why-ml</code></td><td>Explains the engineering philosophy behind the profile.</td></tr>
+    <tr><td><code>project --collaborate</code></td><td>Shows what information makes a collaboration useful.</td></tr>
+    <tr><td><code>learning --roadmap</code></td><td>Shows current and next technical learning direction.</td></tr>
+  </table>
 </details>
 
 ---
