@@ -1,159 +1,244 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&height=230&color=0:020617,35:0f766e,70:2563eb,100:22c55e&text=Jey%20Pranav&fontColor=ffffff&fontSize=62&fontAlignY=37&desc=Machine%20Learning%20%7C%20AI%20Agents%20%7C%20Data%20Systems%20%7C%20Full-Stack%20Engineering&descAlignY=58&descSize=18&animation=fadeIn" alt="Jey Pranav profile banner" />
+<img src="https://capsule-render.vercel.app/api?type=venom&height=260&color=0:020617,35:0f766e,65:2563eb,100:22c55e&text=Jey%20Pranav&fontColor=ffffff&fontSize=68&fontAlignY=38&desc=ML%20Systems%20%7C%20AI%20Agents%20%7C%20Data%20Engineering%20%7C%20Product%20Interfaces&descAlignY=58&descSize=18&animation=fadeIn" alt="Jey Pranav hero banner" />
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=21&duration=2400&pause=650&color=22C55E&center=true&vCenter=true&width=980&lines=I+build+ML+systems+that+move+from+notebooks+to+real+workflows.;AI+agents%2C+data+pipelines%2C+model+evaluation%2C+and+product-grade+interfaces.;Learning+deeply.+Shipping+practically.+Measuring+everything.)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=21&duration=2300&pause=650&color=22C55E&center=true&vCenter=true&width=980&lines=Building+ML+systems+that+escape+the+notebook.;Debugging+data+pipelines%2C+agents%2C+models%2C+and+interfaces.;Learning+deeply.+Shipping+practically.+Measuring+everything.)](https://git.io/typing-svg)
 
 <br />
 
-[![Profile Views](https://komarev.com/ghpvc/?username=Pranav-0710&style=for-the-badge&color=22c55e&label=PROFILE+VIEWS)](https://github.com/Pranav-0710)
-[![Followers](https://img.shields.io/github/followers/Pranav-0710?style=for-the-badge&logo=github&color=2563eb&label=Followers)](https://github.com/Pranav-0710?tab=followers)
-[![Stars](https://img.shields.io/github/stars/Pranav-0710?style=for-the-badge&logo=github&color=0f766e&label=Stars)](https://github.com/Pranav-0710?tab=repositories)
-[![Snake](https://img.shields.io/github/actions/workflow/status/Pranav-0710/Pranav-0710/snake.yaml?branch=main&style=for-the-badge&label=Contribution%20Snake)](https://github.com/Pranav-0710/Pranav-0710/actions/workflows/snake.yaml)
+[![Profile Views](https://komarev.com/ghpvc/?username=Pranav-0710&style=for-the-badge&color=22c55e&label=VISITORS)](https://github.com/Pranav-0710)
+[![Followers](https://img.shields.io/github/followers/Pranav-0710?style=for-the-badge&logo=github&color=2563eb&label=FOLLOWERS)](https://github.com/Pranav-0710?tab=followers)
+[![Stars](https://img.shields.io/github/stars/Pranav-0710?style=for-the-badge&logo=github&color=0f766e&label=STARS)](https://github.com/Pranav-0710?tab=repositories)
+[![Workflow](https://img.shields.io/github/actions/workflow/status/Pranav-0710/Pranav-0710/snake.yaml?branch=main&style=for-the-badge&label=SNAKE)](https://github.com/Pranav-0710/Pranav-0710/actions/workflows/snake.yaml)
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Jey%20Pranav-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/jey-pranav-783761278)
 [![Medium](https://img.shields.io/badge/Medium-@pranavkanth07-000000?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@pranavkanth07)
 [![Instagram](https://img.shields.io/badge/Instagram-@pranxvve-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/pranxvve)
-[![Gmail](https://img.shields.io/badge/Email-pranavkanth07%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:pranavkanth07@gmail.com)
+[![Email](https://img.shields.io/badge/Email-pranavkanth07%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:pranavkanth07@gmail.com)
+
+<br />
+
+<a href="#mission-control"><img src="https://img.shields.io/badge/01-Mission%20Control-020617?style=for-the-badge&labelColor=22c55e" alt="Mission Control" /></a>
+<a href="#project-gallery"><img src="https://img.shields.io/badge/02-Project%20Gallery-020617?style=for-the-badge&labelColor=2563eb" alt="Project Gallery" /></a>
+<a href="#skill-matrix"><img src="https://img.shields.io/badge/03-Skill%20Matrix-020617?style=for-the-badge&labelColor=0f766e" alt="Skill Matrix" /></a>
+<a href="#github-radar"><img src="https://img.shields.io/badge/04-GitHub%20Radar-020617?style=for-the-badge&labelColor=facc15" alt="GitHub Radar" /></a>
 
 </div>
 
 ---
 
-## Mission
+## Mission Control
 
 <table>
   <tr>
-    <td width="58%">
-      <h3>Applied ML builder</h3>
+    <td width="62%" valign="top">
+      <h3>System objective</h3>
       <p>
-        I am focused on machine learning systems that connect clean data, reliable evaluation, useful models, and interfaces people can actually use.
+        I build toward one goal: turn machine learning ideas into working systems with clean data, measurable model behavior, strong backend flows, and interfaces people can use without reading the code.
       </p>
       <p>
-        My work sits at the edge of ML engineering, AI agent environments, data tooling, and full-stack product development.
+        The current direction is ML engineering, AI agent environments, data pipeline debugging, evaluation-first experimentation, and practical product wrappers around models.
       </p>
+      <blockquote>
+        Notebook is not the finish line. A useful system needs data quality, evaluation, deployment, observability, and a clear user path.
+      </blockquote>
     </td>
-    <td width="42%">
-      <h3>Current signal</h3>
-      <ul>
-        <li><b>Learning:</b> ML foundations, model evaluation, production ML patterns.</li>
-        <li><b>Building:</b> AI agent environments, data pipeline tools, applied ML demos.</li>
-        <li><b>Exploring:</b> reward design, observability, RAG, automated debugging.</li>
-        <li><b>Open to:</b> ML internships, research-style projects, AI tooling collaborations.</li>
-      </ul>
+    <td width="38%" valign="top">
+      <h3>Live profile packet</h3>
+      <table>
+        <tr><td><b>Name</b></td><td>Jey Pranav</td></tr>
+        <tr><td><b>Core</b></td><td>ML + AI systems</td></tr>
+        <tr><td><b>Mode</b></td><td>Learning, building, shipping</td></tr>
+        <tr><td><b>Interests</b></td><td>Agents, pipelines, RAG, evaluation</td></tr>
+        <tr><td><b>Open to</b></td><td>ML internships, AI tooling, research-style builds</td></tr>
+      </table>
     </td>
   </tr>
 </table>
-
----
-
-## ML Focus Map
-
-<table>
-  <tr>
-    <td width="25%" align="center">
-      <h3>Data</h3>
-      <p>Cleaning, validation, feature prep, pipeline debugging, reproducible workflows.</p>
-    </td>
-    <td width="25%" align="center">
-      <h3>Models</h3>
-      <p>Classical ML, deep learning basics, metrics, experiments, evaluation discipline.</p>
-    </td>
-    <td width="25%" align="center">
-      <h3>Agents</h3>
-      <p>Tool use, environments, reward shaping, traces, automated debugging loops.</p>
-    </td>
-    <td width="25%" align="center">
-      <h3>Products</h3>
-      <p>Fast APIs, dashboards, demos, deployment, usable interfaces around ML systems.</p>
-    </td>
-  </tr>
-</table>
-
----
-
-## Featured ML Work
-
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>DataEngEnv</h3>
-      <p><b>AI agent environment for ML pipeline debugging.</b></p>
-      <p>
-        An OpenEnv-style challenge where an agent diagnoses broken ML pipelines before production. Built for the Meta AI x Hugging Face OpenEnv Hackathon.
-      </p>
-      <p>
-        <img src="https://img.shields.io/badge/Status-Live-22c55e?style=flat-square" alt="Live" />
-        <img src="https://img.shields.io/badge/Area-AI%20Agents-2563eb?style=flat-square" alt="AI Agents" />
-        <img src="https://img.shields.io/badge/Area-ML%20Pipelines-0f766e?style=flat-square" alt="ML Pipelines" />
-        <a href="https://huggingface.co/spaces/CoBeDigger/DataEngEnv"><img src="https://img.shields.io/badge/HF%20Space-Open-facc15?style=flat-square" alt="Hugging Face Space" /></a>
-      </p>
-      <p><b>Stack:</b> Python, FastAPI, Docker, Hugging Face Spaces, Groq</p>
-      <ul>
-        <li>Three debugging scenarios across increasing difficulty levels.</li>
-        <li>20-step episodes with partial reward shaping.</li>
-        <li>Sandboxed execution and live error observations.</li>
-        <li>Designed to test whether agents can reason through messy pipeline failures.</li>
-      </ul>
-    </td>
-    <td width="50%" valign="top">
-      <h3>ML Learning Lab</h3>
-      <p><b>Project track for serious ML foundations.</b></p>
-      <p>
-        A growing body of experiments around supervised learning, evaluation, feature engineering, model behavior, and practical deployment thinking.
-      </p>
-      <p>
-        <img src="https://img.shields.io/badge/Track-ML%20Foundations-22c55e?style=flat-square" alt="ML Foundations" />
-        <img src="https://img.shields.io/badge/Focus-Evaluation-2563eb?style=flat-square" alt="Evaluation" />
-        <img src="https://img.shields.io/badge/Style-Hands--on-0f766e?style=flat-square" alt="Hands-on" />
-      </p>
-      <p><b>Stack:</b> Python, NumPy, pandas, scikit-learn, TensorFlow, PyTorch, Streamlit</p>
-      <ul>
-        <li>Experiment-first learning with metrics, baselines, and failure analysis.</li>
-        <li>Small but complete projects instead of isolated notebook snippets.</li>
-        <li>Focus on explainability, reproducibility, and clean model reports.</li>
-        <li>Interfaces that make results understandable to non-ML users.</li>
-      </ul>
-    </td>
-  </tr>
-</table>
-
----
-
-## Engineering Stack
 
 <div align="center">
 
-[![ML + Engineering Stack](https://skillicons.dev/icons?i=py,tensorflow,pytorch,sklearn,opencv,fastapi,flask,js,ts,react,nextjs,nodejs,html,css,tailwind,mongodb,mysql,postgres,supabase,aws,gcp,vercel,docker,git,github,vscode,powershell&perline=14)](https://skillicons.dev)
+<img src="https://github-profile-trophy.vercel.app/?username=Pranav-0710&theme=algolia&no-frame=true&no-bg=true&margin-w=8&margin-h=8&column=4" alt="GitHub trophies" />
 
 </div>
 
+---
+
+## Operating System
+
+<table>
+  <tr>
+    <td width="25%" align="center" valign="top">
+      <img src="https://img.shields.io/badge/Data-Validated-22c55e?style=for-the-badge" alt="Data validated" />
+      <p><b>Data layer</b></p>
+      <p>Cleaning, schemas, leakage checks, feature prep, reproducible pipelines.</p>
+    </td>
+    <td width="25%" align="center" valign="top">
+      <img src="https://img.shields.io/badge/Models-Measured-2563eb?style=for-the-badge" alt="Models measured" />
+      <p><b>Model layer</b></p>
+      <p>Baselines, metrics, experiments, error analysis, practical evaluation.</p>
+    </td>
+    <td width="25%" align="center" valign="top">
+      <img src="https://img.shields.io/badge/Agents-Traced-0f766e?style=for-the-badge" alt="Agents traced" />
+      <p><b>Agent layer</b></p>
+      <p>Tool use, environments, observations, reward shaping, debugging loops.</p>
+    </td>
+    <td width="25%" align="center" valign="top">
+      <img src="https://img.shields.io/badge/Product-Shipped-facc15?style=for-the-badge" alt="Product shipped" />
+      <p><b>Product layer</b></p>
+      <p>APIs, dashboards, demos, auth, deployment, human-readable results.</p>
+    </td>
+  </tr>
+</table>
+
+---
+
+## Project Gallery
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:22c55e,100:2563eb" alt="divider" />
+      <h3>DataEngEnv</h3>
+      <p><b>AI agent environment for debugging broken ML pipelines.</b></p>
+      <p>
+        An OpenEnv-style environment where an agent must inspect failures, run code, understand pipeline errors, and fix production-style ML issues under step constraints.
+      </p>
+      <p>
+        <a href="https://huggingface.co/spaces/CoBeDigger/DataEngEnv"><img src="https://img.shields.io/badge/Hugging%20Face-Open%20Space-facc15?style=flat-square" alt="Hugging Face Space" /></a>
+        <img src="https://img.shields.io/badge/Status-Live-22c55e?style=flat-square" alt="Live" />
+        <img src="https://img.shields.io/badge/Domain-AI%20Agents-2563eb?style=flat-square" alt="AI agents" />
+        <img src="https://img.shields.io/badge/Domain-ML%20Pipelines-0f766e?style=flat-square" alt="ML pipelines" />
+      </p>
+      <p><b>Stack:</b> Python, FastAPI, Docker, Hugging Face Spaces, Groq</p>
+      <ul>
+        <li>Three debugging scenarios across increasing difficulty.</li>
+        <li>20-step episodes with partial reward shaping.</li>
+        <li>Sandboxed script execution and live observations.</li>
+        <li>Designed to evaluate agent reasoning, not only final output.</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:2563eb,100:22c55e" alt="divider" />
+      <h3>Pro-Techt</h3>
+      <p><b>Full-stack product system for protection and service tracking.</b></p>
+      <p>
+        A practical SaaS-style platform concept for warranties, service records, smart reminders, documents, and user dashboards. Mentioned as product engineering work, not current headline focus.
+      </p>
+      <p>
+        <img src="https://img.shields.io/badge/Type-Full--Stack%20Product-2563eb?style=flat-square" alt="Full-stack product" />
+        <img src="https://img.shields.io/badge/Focus-Workflows-0f766e?style=flat-square" alt="Workflows" />
+        <img src="https://img.shields.io/badge/Layer-Product%20UX-22c55e?style=flat-square" alt="Product UX" />
+      </p>
+      <p><b>Stack:</b> React, Node.js, MongoDB, Supabase, Vercel</p>
+      <ul>
+        <li>Dashboard flows for service and warranty visibility.</li>
+        <li>Document management and reminder-oriented workflows.</li>
+        <li>Product thinking around trust, alerts, and lifecycle tracking.</li>
+        <li>Useful full-stack base for future ML-assisted automation ideas.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:0f766e,100:facc15" alt="divider" />
+      <h3>ML Learning Lab</h3>
+      <p><b>Experiment track for ML foundations and evaluation discipline.</b></p>
+      <p>
+        A practical learning stream focused on baselines, metrics, feature thinking, error analysis, and model reports instead of disconnected notebook snippets.
+      </p>
+      <p>
+        <img src="https://img.shields.io/badge/Track-ML%20Foundations-22c55e?style=flat-square" alt="ML foundations" />
+        <img src="https://img.shields.io/badge/Focus-Evaluation-2563eb?style=flat-square" alt="Evaluation" />
+        <img src="https://img.shields.io/badge/Style-Experiment%20First-0f766e?style=flat-square" alt="Experiment first" />
+      </p>
+      <p><b>Stack:</b> Python, NumPy, pandas, scikit-learn, TensorFlow, PyTorch, Streamlit</p>
+      <ul>
+        <li>Clean baselines before complex models.</li>
+        <li>Metrics aligned with use case, not vanity accuracy.</li>
+        <li>Error analysis converted into next experiment.</li>
+        <li>Readable demos and reports for model behavior.</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:facc15,100:2563eb" alt="divider" />
+      <h3>Next Build Zone</h3>
+      <p><b>Where new repos should appear.</b></p>
+      <p>
+        The next best profile upgrade is not more decoration. It is stronger public proof: compact ML projects with clean READMEs, demo links, metrics, and model behavior notes.
+      </p>
+      <p>
+        <img src="https://img.shields.io/badge/Next-RAG%20Demo-2563eb?style=flat-square" alt="RAG demo" />
+        <img src="https://img.shields.io/badge/Next-Agent%20Eval-0f766e?style=flat-square" alt="Agent eval" />
+        <img src="https://img.shields.io/badge/Next-Data%20Tool-22c55e?style=flat-square" alt="Data tool" />
+      </p>
+      <ul>
+        <li>RAG mini-system with retrieval evaluation.</li>
+        <li>Agent benchmark with trace viewer and scoring.</li>
+        <li>Data quality checker for tabular ML projects.</li>
+        <li>Model report generator with Streamlit or Next.js UI.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+---
+
+## Skill Matrix
+
+<div align="center">
+
+[![Skill Icons](https://skillicons.dev/icons?i=py,tensorflow,pytorch,sklearn,opencv,fastapi,flask,js,ts,react,nextjs,nodejs,html,css,tailwind,mongodb,mysql,postgres,supabase,aws,gcp,vercel,docker,git,github,vscode,powershell&perline=14)](https://skillicons.dev)
+
+</div>
+
+<table>
+  <tr>
+    <td width="33%" valign="top">
+      <h3>ML Engineering</h3>
+      <p><code>Python</code> <code>NumPy</code> <code>pandas</code> <code>scikit-learn</code> <code>TensorFlow</code> <code>PyTorch</code></p>
+      <ul>
+        <li>Baselines and experiments.</li>
+        <li>Metrics and evaluation.</li>
+        <li>Error analysis and reports.</li>
+      </ul>
+    </td>
+    <td width="33%" valign="top">
+      <h3>AI Systems</h3>
+      <p><code>Agents</code> <code>RAG</code> <code>FastAPI</code> <code>Docker</code> <code>Tracing</code></p>
+      <ul>
+        <li>Agent environments.</li>
+        <li>Tool-use workflows.</li>
+        <li>Reward and observation design.</li>
+      </ul>
+    </td>
+    <td width="33%" valign="top">
+      <h3>Product Engineering</h3>
+      <p><code>React</code> <code>Next.js</code> <code>Node.js</code> <code>Supabase</code> <code>Vercel</code></p>
+      <ul>
+        <li>Dashboards and demos.</li>
+        <li>APIs and auth flows.</li>
+        <li>Deployable product shells.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
 <details>
-  <summary><b>Open stack breakdown</b></summary>
+  <summary><b>Open detailed stack map</b></summary>
   <br />
   <table>
-    <tr>
-      <td><b>ML Core</b></td>
-      <td>Python, NumPy, pandas, scikit-learn, TensorFlow, PyTorch, model metrics, experiment tracking habits.</td>
-    </tr>
-    <tr>
-      <td><b>AI Systems</b></td>
-      <td>Agent environments, tool-calling flows, reward design, traces, sandboxed execution, LLM-backed workflows.</td>
-    </tr>
-    <tr>
-      <td><b>Backend</b></td>
-      <td>FastAPI, Flask, Node.js, Express, REST APIs, auth, storage, background jobs, deployment workflows.</td>
-    </tr>
-    <tr>
-      <td><b>Product UI</b></td>
-      <td>React, Next.js, Tailwind, Streamlit, dashboards, demos, visual explanations, clean user flows.</td>
-    </tr>
+    <tr><td><b>Data</b></td><td>Validation, cleaning, schema checks, feature preparation, leakage prevention, reproducible splits.</td></tr>
+    <tr><td><b>Models</b></td><td>Supervised learning, baselines, deep learning basics, model reports, confusion matrices, threshold thinking.</td></tr>
+    <tr><td><b>Agents</b></td><td>Actions, observations, rewards, traces, sandboxed execution, failure diagnosis, evaluation loops.</td></tr>
+    <tr><td><b>Backend</b></td><td>FastAPI, Flask, Node.js, Express, REST APIs, storage, auth, background tasks, deployment.</td></tr>
+    <tr><td><b>Frontend</b></td><td>React, Next.js, Tailwind, Streamlit, dashboards, demo apps, visualization-first UX.</td></tr>
   </table>
 </details>
 
 ---
 
-## GitHub Intelligence
+## GitHub Radar
 
 <div align="center">
 
@@ -170,46 +255,72 @@
 
 ---
 
-## Learning Protocol
+## Interactive Console
 
 <details open>
-  <summary><b>How I approach ML projects</b></summary>
+  <summary><b>Run: profile --why-ml</b></summary>
   <br />
-  <ul>
-    <li>Start with problem framing: target user, prediction goal, constraints, and failure cost.</li>
-    <li>Build clean baselines before adding complex models.</li>
-    <li>Track metrics that match the real use case, not vanity accuracy.</li>
-    <li>Inspect errors directly and turn failure cases into next experiments.</li>
-    <li>Wrap useful results in APIs, dashboards, or demos so the model can be used.</li>
-  </ul>
+
+```txt
+> profile --why-ml
+
+Goal:
+  Build ML systems that are useful outside notebooks.
+
+Belief:
+  Good ML work = clean data + honest metrics + failure analysis + usable interface.
+
+Current direction:
+  AI agents, data pipeline debugging, RAG, model evaluation, product-grade demos.
+```
 </details>
 
 <details>
-  <summary><b>Topics I am actively sharpening</b></summary>
+  <summary><b>Run: project --collaborate</b></summary>
   <br />
-  <ul>
-    <li>Supervised learning, optimization, regularization, and evaluation.</li>
-    <li>Feature engineering, data leakage prevention, and validation design.</li>
-    <li>Agent evaluation, reward shaping, and environment design.</li>
-    <li>RAG systems, embeddings, retrieval quality, and observability.</li>
-    <li>Production ML patterns: monitoring, retries, latency, and deployment discipline.</li>
-  </ul>
+
+```txt
+> project --collaborate
+
+Send:
+  problem statement
+  dataset shape or sample
+  target metric
+  constraints
+  expected output
+
+Best fit:
+  ML experiments
+  agent environments
+  data tools
+  evaluation dashboards
+```
 </details>
 
 <details>
-  <summary><b>Collaboration menu</b></summary>
+  <summary><b>Run: learning --roadmap</b></summary>
   <br />
-  <ul>
-    <li><b>ML project:</b> Send dataset shape, objective, baseline, target metric, and constraints.</li>
-    <li><b>AI agent idea:</b> Send environment rules, actions, observations, reward logic, and success criteria.</li>
-    <li><b>Data tooling:</b> Send pipeline steps, failure modes, input/output samples, and deployment target.</li>
-    <li><b>Internship / team:</b> Send role scope, expected stack, timeline, and interview process.</li>
-  </ul>
+
+```txt
+> learning --roadmap
+
+Now:
+  supervised ML fundamentals
+  evaluation and validation design
+  agent environment design
+  RAG quality and observability
+
+Next:
+  stronger public ML repos
+  cleaner demos
+  measurable benchmarks
+  deployment-ready examples
+```
 </details>
 
 ---
 
-## Contribution Map
+## Contribution Stream
 
 <div align="center">
 
@@ -221,12 +332,14 @@
 
 <div align="center">
 
-### Turning ML concepts into working systems.
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=18&duration=2600&pause=900&color=38BDF8&center=true&vCenter=true&width=900&lines=If+you+care+about+ML+systems%2C+agents%2C+or+data+tools%2C+let's+connect.;Best+projects+are+not+only+smart.+They+are+measured%2C+usable%2C+and+shipped." alt="closing typing line" />
+
+<br />
 
 [![Connect on LinkedIn](https://img.shields.io/badge/Connect%20on%20LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/jey-pranav-783761278)
 [![Read on Medium](https://img.shields.io/badge/Read%20on%20Medium-000000?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@pranavkanth07)
 [![Email Me](https://img.shields.io/badge/Email%20Me-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:pranavkanth07@gmail.com)
 
-<img src="https://capsule-render.vercel.app/api?type=waving&height=125&section=footer&color=0:22c55e,35:2563eb,75:0f766e,100:020617" alt="Footer wave" />
+<img src="https://capsule-render.vercel.app/api?type=waving&height=130&section=footer&color=0:22c55e,35:2563eb,75:0f766e,100:020617" alt="Footer wave" />
 
 </div>
