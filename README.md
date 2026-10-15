@@ -216,3 +216,4 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&height=130&section=footer&color=0:22c55e,35:2563eb,75:0f766e,100:020617" alt="Footer wave" />
 
 </div>
+  
