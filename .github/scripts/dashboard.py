@@ -30,6 +30,9 @@ PORTRAIT_CROP = (0.2, 0.0, 0.9, 0.7)
 # "dither": dot-matrix, works with photos. "ascii": character art, best with a cartoon or
 # illustrated avatar on a plain background.
 PORTRAIT_STYLE = "dither"
+# The portrait loops: dots appear in staggered waves, hold, then dissolve.
+FADE_LAYERS = 4
+FADE_CYCLE = 7  # seconds per loop
 
 BG, PANEL, BAR, BORDER, GRID = "#0d1117", "#0d1117", "#161b22", "#30363d", "#21262d"
 TEXT, MUTED, DIM = "#c9d1d9", "#8b949e", "#6e7681"
@@ -169,27 +172,53 @@ def load_portrait(avatar_url):
     return ImageOps.autocontrast(img, cutoff=1)
 
 
+def fade_css(size):
+    """Looping dissolve for the portrait layers, with a scan line sweeping in."""
+    stagger = 0.3
+    return ('<style>'
+            f'.pl{{animation:pl {FADE_CYCLE}s ease-in-out infinite backwards}}'
+            '@keyframes pl{0%{opacity:0}10%{opacity:1}65%{opacity:1}78%{opacity:0}100%{opacity:0}}'
+            + "".join(f'.pl{k}{{animation-delay:{k * stagger:.1f}s}}' for k in range(FADE_LAYERS))
+            + f'.scan{{opacity:0;animation:scan {FADE_CYCLE}s linear infinite}}'
+            f'@keyframes scan{{0%{{opacity:.85;transform:translateY(0)}}'
+            f'22%{{opacity:.85;transform:translateY({size}px)}}23%,100%{{opacity:0;transform:translateY({size}px)}}}}'
+            '</style>')
+
+
+def scan_line(x, y, size):
+    return (f'<g class="scan"><rect x="{x}" y="{y - 4}" width="{size}" height="10" fill="{GREEN}" opacity=".12"/>'
+            f'<rect x="{x}" y="{y}" width="{size}" height="2" fill="{GREEN}"/></g>')
+
+
 def dither_svg(img, x, y, size, color=TEXT):
-    """1-bit Floyd–Steinberg dot matrix, embedded as a tiny transparent PNG."""
+    """1-bit Floyd–Steinberg dot matrix, split into FADE_LAYERS transparent PNGs."""
     from PIL import Image, ImageEnhance
     pitch = 4
     n = size // pitch
     dots = ImageEnhance.Contrast(img).enhance(1.3).resize((n, n), Image.LANCZOS).convert("1")
-    big = Image.new("P", (n * pitch, n * pitch), 0)
     rgb = tuple(int(color[i:i + 2], 16) for i in (1, 3, 5))
-    big.putpalette([0, 0, 0, *rgb])
-    px, out = dots.load(), big.load()
+    layers = []
+    for _ in range(FADE_LAYERS):
+        layer = Image.new("P", (n * pitch, n * pitch), 0)
+        layer.putpalette([0, 0, 0, *rgb])
+        layers.append(layer)
+    px, outs = dots.load(), [layer.load() for layer in layers]
     for j in range(n):
         for i in range(n):
             if px[i, j]:
+                # Deterministic scatter, so the layers do not change between daily runs.
+                out = outs[((i * 73856093) ^ (j * 19349663)) % FADE_LAYERS]
                 for dy in range(pitch - 1):
                     for dx in range(pitch - 1):
                         out[i * pitch + dx, j * pitch + dy] = 1
-    buf = io.BytesIO()
-    big.save(buf, "PNG", transparency=0, optimize=True)
-    data = base64.b64encode(buf.getvalue()).decode()
-    return (f'<image x="{x}" y="{y}" width="{n * pitch}" height="{n * pitch}" style="image-rendering:pixelated" '
-            f'href="data:image/png;base64,{data}"/>')
+    parts = []
+    for k, layer in enumerate(layers):
+        buf = io.BytesIO()
+        layer.save(buf, "PNG", transparency=0, optimize=True)
+        data = base64.b64encode(buf.getvalue()).decode()
+        parts.append(f'<image class="pl pl{k}" x="{x}" y="{y}" width="{n * pitch}" height="{n * pitch}" '
+                     f'style="image-rendering:pixelated" href="data:image/png;base64,{data}"/>')
+    return "".join(parts)
 
 
 def ascii_rows(img, cols, rows):
@@ -203,29 +232,31 @@ def ascii_rows(img, cols, rows):
 
 def ascii_svg(rows, x0, y0, cw, rh, size):
     tiers = [(DIM, set(RAMP[1:8])), (MUTED, set(RAMP[8:15])), (TEXT, set(RAMP[15:]))]
-    out = [f'<g font-size="{size}">']
+    groups = [[] for _ in range(FADE_LAYERS)]
     for r, line in enumerate(rows):
         for color, chars in tiers:
             xs = [f"{x0 + c * cw:.1f}" for c, ch in enumerate(line) if ch in chars]
             text = "".join(ch for ch in line if ch in chars)
             if text:
-                out.append(f'<text y="{y0 + r * rh:.1f}" x="{" ".join(xs)}" fill="{color}">{esc(text)}</text>')
-    out.append("</g>")
-    return "".join(out)
+                groups[r % FADE_LAYERS].append(
+                    f'<text y="{y0 + r * rh:.1f}" x="{" ".join(xs)}" fill="{color}">{esc(text)}</text>')
+    return "".join(f'<g class="pl pl{k}" font-size="{size}">{"".join(g)}</g>' for k, g in enumerate(groups))
 
 
 def portrait_svg(img, name, x, y, size):
-    """Portrait block filling a size×size square at (x, y)."""
+    """Portrait block filling a size×size square at (x, y), looping fade in and out."""
     if img is not None and PORTRAIT_STYLE == "dither":
-        return dither_svg(img, x, y, size, MUTED)
-    if img is not None:
+        art = dither_svg(img, x, y, size, MUTED)
+    elif img is not None:
         cols = 60
         cw = size / cols
         rows = int(size / (cw * 1.72))
-        return ascii_svg(ascii_rows(img, cols, rows), x, y + cw * 1.4, cw, cw * 1.72, round(cw * 1.62, 1))
-    initials = "".join(p[0] for p in name.split()[:2]).upper() or "?"
-    return (f'<text x="{x + size / 2}" y="{y + size / 2 + 30}" text-anchor="middle" font-size="96" '
-            f'font-weight="700" fill="{GREEN}">{esc(initials)}</text>')
+        art = ascii_svg(ascii_rows(img, cols, rows), x, y + cw * 1.4, cw, cw * 1.72, round(cw * 1.62, 1))
+    else:
+        initials = "".join(p[0] for p in name.split()[:2]).upper() or "?"
+        art = (f'<text class="pl pl0" x="{x + size / 2}" y="{y + size / 2 + 30}" text-anchor="middle" '
+               f'font-size="96" font-weight="700" fill="{GREEN}">{esc(initials)}</text>')
+    return fade_css(size) + art + scan_line(x, y, size)
 
 
 # ── drawing helpers ─────────────────────────────────────────────────────────
@@ -253,7 +284,8 @@ def svg(w, h, title, desc, body):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" '
             f'role="img" aria-labelledby="t d"><title id="t">{esc(title)}</title><desc id="d">{esc(desc)}</desc>'
             f'<style>.fade{{animation:fade .6s ease-out backwards}}@keyframes fade{{from{{opacity:0}}}}'
-            f'@media (prefers-reduced-motion:reduce){{*{{animation:none!important}}}}</style>'
+            # Reduced motion keeps opacity fades (no movement) and drops the moving scan line.
+            f'@media (prefers-reduced-motion:reduce){{.scan{{animation:none!important}}}}</style>'
             f'<rect width="{w}" height="{h}" rx="10" fill="{BG}"/><g font-family="{FONT}">{body}</g></svg>\n')
 
 
