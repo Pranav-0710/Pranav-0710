@@ -1,219 +1,123 @@
-<div align="center">
+<!--
+  Profile dashboard for github.com/Pranav-0710
+  - output branch ........... panels rebuilt daily by .github/workflows/dashboard.yml (script: .github/scripts/dashboard.py)
+  - assets/ ................. static prompt lines and link buttons
+  - .github/DASHBOARD.md .... how it works, setup, fallbacks, checklist
+-->
 
-<img src="https://capsule-render.vercel.app/api?type=venom&height=250&color=0:020617,35:0f766e,65:2563eb,100:22c55e&text=Jey%20Pranav&fontColor=ffffff&fontSize=66&fontAlignY=38&desc=Machine%20Learning%20Learner%20%7C%20Full-Stack%20Developer%20%7C%20AI%20Curious%20Builder&descAlignY=58&descSize=18&animation=fadeIn" alt="Jey Pranav hero banner" />
+<picture>
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/contributions-mobile.svg" />
+  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/contributions.svg" alt="jey@github ~ $ ./contributions.sh: contribution heatmap for the last year, one green square per day" />
+</picture>
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=800&size=21&duration=2300&pause=650&color=22C55E&center=true&vCenter=true&width=980&lines=Learning+machine+learning+by+building+real+projects.;Exploring+AI+agents%2C+data+pipelines%2C+and+model+evaluation.;Building+full-stack+apps+and+improving+one+repo+at+a+time.)](https://git.io/typing-svg)
+<picture>
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/whoami-mobile.svg" />
+  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/whoami.svg" alt="jey@github ~ $ whoami: dot-matrix portrait of Jey Pranav next to current and longest streak, contributions, active days, best day, average per active day, and contributions per month" />
+</picture>
 
-<br />
+<p align="center"><sub>I build where models meet real users: voice AI, RL environments for LLM agents, 3D data products and brain-to-text research.<br />Open to internships and collaborations.</sub></p>
 
-[![Profile Views](https://komarev.com/ghpvc/?username=Pranav-0710&style=for-the-badge&color=22c55e&label=VISITORS)](https://github.com/Pranav-0710)
-[![Followers](https://img.shields.io/github/followers/Pranav-0710?style=for-the-badge&logo=github&color=2563eb&label=FOLLOWERS)](https://github.com/Pranav-0710?tab=followers)
-[![Stars](https://img.shields.io/github/stars/Pranav-0710?style=for-the-badge&logo=github&color=0f766e&label=STARS)](https://github.com/Pranav-0710?tab=repositories)
-[![Workflow](https://img.shields.io/github/actions/workflow/status/Pranav-0710/Pranav-0710/snake.yaml?branch=main&style=for-the-badge&label=SNAKE)](https://github.com/Pranav-0710/Pranav-0710/actions/workflows/snake.yaml)
+<picture>
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/languages-mobile.svg" />
+  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/languages.svg" alt="jey@github ~ $ ./languages.sh: share of code by language across public repositories" />
+</picture>
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Jey%20Pranav-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/jey-pranav-783761278)
-[![Medium](https://img.shields.io/badge/Medium-@pranavkanth07-000000?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@pranavkanth07)
-[![Instagram](https://img.shields.io/badge/Instagram-@pranxvve-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/pranxvve)
-[![Email](https://img.shields.io/badge/Email-pranavkanth07%40gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:pranavkanth07@gmail.com)
-
-<br />
-
-<a href="#about"><img src="https://img.shields.io/badge/01-About-020617?style=for-the-badge&labelColor=22c55e" alt="About" /></a>
-<a href="#projects"><img src="https://img.shields.io/badge/02-Projects-020617?style=for-the-badge&labelColor=2563eb" alt="Projects" /></a>
-<a href="#tools"><img src="https://img.shields.io/badge/03-Tools-020617?style=for-the-badge&labelColor=0f766e" alt="Tools" /></a>
-<a href="#github-stats"><img src="https://img.shields.io/badge/04-Stats-020617?style=for-the-badge&labelColor=facc15" alt="Stats" /></a>
-
-</div>
-
----
-
-## About
+<picture>
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/prompt-projects-mobile.svg" />
+  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/prompt-projects.svg" alt="jey@github ~ $ ls ~/projects --featured" />
+</picture>
 
 <table>
-  <tr>
-    <td width="60%" valign="top">
-      <h3>What I am focused on</h3>
-      <p>
-        I am building my skills in machine learning and full-stack development. I like projects where data, backend logic, and user interfaces connect into something practical.
-      </p>
-      <p>
-        My current learning direction is ML fundamentals, model evaluation, data pipeline problems, and AI-agent style environments.
-      </p>
-    </td>
-    <td width="40%" valign="top">
-      <h3>Profile</h3>
-      <table>
-        <tr><td><b>Name</b></td><td>Jey Pranav</td></tr>
-        <tr><td><b>Focus</b></td><td>ML + full-stack development</td></tr>
-        <tr><td><b>Learning</b></td><td>Andrew Ng's ML Specialization</td></tr>
-        <tr><td><b>Interests</b></td><td>AI agents, data tools, practical ML</td></tr>
-        <tr><td><b>Open to</b></td><td>Internships and collaborations</td></tr>
-      </table>
-    </td>
-  </tr>
-</table>
+<tr>
+<td width="50%" valign="top">
 
----
+#### [dhwani-desk](https://github.com/Pranav-0710/dhwani-desk)
+<sub>`status: in development` · Great Indian AI Internship Challenge (Gnani AI)</sub>
 
-## Projects
+Kannada-first voice helpline for civic complaints. Gnani Prisma transcribes the caller, the Laya engine decides department, ward, urgency and when a human must step in (locally, no LLM in the call path), and Gnani Timbre speaks the reply. A supervisor console lets an officer take over a call.
 
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:22c55e,100:2563eb" alt="divider" />
-      <h3>DataEngEnv</h3>
-      <p><b>AI-agent environment for ML pipeline debugging.</b></p>
-      <p>
-        Built for the Meta AI x Hugging Face OpenEnv Hackathon. The environment asks an agent to debug broken ML pipelines through code execution and observations.
-      </p>
-      <p>
-        <a href="https://huggingface.co/spaces/CoBeDigger/DataEngEnv"><img src="https://img.shields.io/badge/Hugging%20Face-Open%20Space-facc15?style=flat-square" alt="Hugging Face Space" /></a>
-        <img src="https://img.shields.io/badge/Status-Live-22c55e?style=flat-square" alt="Live" />
-        <img src="https://img.shields.io/badge/Area-AI%20Agents-2563eb?style=flat-square" alt="AI agents" />
-        <img src="https://img.shields.io/badge/Area-ML%20Pipelines-0f766e?style=flat-square" alt="ML pipelines" />
-      </p>
-      <p><b>Stack:</b> Python, FastAPI, Docker, Hugging Face Spaces, Groq</p>
-      <ul>
-        <li>Three pipeline debugging scenarios.</li>
-        <li>20-step episodes with partial rewards.</li>
-        <li>Sandboxed script execution and live error observations.</li>
-        <li>Baseline agent scored 1.00 across all three tasks.</li>
-      </ul>
-    </td>
-    <td width="50%" valign="top">
-      <img src="https://capsule-render.vercel.app/api?type=rect&height=4&color=0:2563eb,100:22c55e" alt="divider" />
-      <h3>Pro-Techt</h3>
-      <p><b>Full-stack SaaS-style product project.</b></p>
-      <p>
-        A platform idea for tracking warranties, service records, smart alerts, and documents in one place.
-      </p>
-      <p>
-        <img src="https://img.shields.io/badge/Type-Full--Stack-2563eb?style=flat-square" alt="Full stack" />
-        <img src="https://img.shields.io/badge/Focus-Product%20Workflow-0f766e?style=flat-square" alt="Product workflow" />
-        <img src="https://img.shields.io/badge/Status-In%20Progress-f97316?style=flat-square" alt="In progress" />
-      </p>
-      <p><b>Stack:</b> React, Node.js, MongoDB, Supabase, Vercel</p>
-      <ul>
-        <li>Warranty and service tracking flow.</li>
-        <li>Dashboard-oriented user experience.</li>
-        <li>Document upload and management concept.</li>
-        <li>Smart alert workflow for expiry tracking.</li>
-      </ul>
-    </td>
-  </tr>
-</table>
+`Python` `FastAPI` `React` `TypeScript` `Vite` `Laya`
 
----
+<sub>my part: voice pipeline and serving</sub>
 
-## Tools
+</td>
+<td width="50%" valign="top">
 
-<div align="center">
+#### [DataEngEnv · PipelineOps Arena](https://github.com/Pranav-0710/DataEngEnv)
+<sub>Meta AI × Hugging Face OpenEnv Hackathon 2026</sub>
 
-[![Skill Icons](https://skillicons.dev/icons?i=py,tensorflow,pytorch,sklearn,fastapi,flask,js,ts,react,nextjs,nodejs,html,css,tailwind,mongodb,mysql,postgres,supabase,aws,gcp,vercel,docker,git,github,vscode,powershell&perline=13)](https://skillicons.dev)
+A four-stage OpenEnv environment where an LLM agent repairs a broken ML pipeline: schema drift, unscaled features, data leakage, then a fairness gate. Rewards come from actually running the fixed script, not from an LLM judge.
 
-</div>
+`Python` `FastAPI` `Docker` `OpenEnv` `Unsloth` `LoRA` `GRPO`
 
-<table>
-  <tr>
-    <td width="33%" valign="top">
-      <h3>ML / Data</h3>
-      <p><code>Python</code> <code>scikit-learn</code> <code>TensorFlow</code> <code>PyTorch</code></p>
-      <ul>
-        <li>Learning ML foundations.</li>
-        <li>Practicing model evaluation.</li>
-        <li>Working with data pipeline problems.</li>
-      </ul>
-    </td>
-    <td width="33%" valign="top">
-      <h3>Backend</h3>
-      <p><code>FastAPI</code> <code>Node.js</code> <code>Express</code> <code>Supabase</code></p>
-      <ul>
-        <li>API development.</li>
-        <li>Database and storage-backed app flows.</li>
-        <li>Deployment-oriented project structure.</li>
-      </ul>
-    </td>
-    <td width="33%" valign="top">
-      <h3>Frontend</h3>
-      <p><code>React</code> <code>Next.js</code> <code>Tailwind</code> <code>Streamlit</code></p>
-      <ul>
-        <li>Dashboards and product UI.</li>
-        <li>Project demos.</li>
-        <li>Clean presentation of technical work.</li>
-      </ul>
-    </td>
-  </tr>
-</table>
+<sub>[live Space](https://huggingface.co/spaces/CoBeDigger/DataEngEnv) · [trained adapter](https://huggingface.co/CoBeDigger/pipelineops-arena-llama3-grpo)</sub>
 
----
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
 
-## GitHub Stats
+#### [Terrain](https://github.com/Pranav-0710/Terrain)
+<sub>built for an OpenAI hackathon</sub>
 
-<div align="center">
+News-intelligence platform that maps live events onto a 3D WebGL globe and compares how outlets around the world frame the same story, with LLM-based consensus and contradiction analysis over GDELT and RSS feeds.
 
-<img width="49%" src="https://github-readme-stats.vercel.app/api?username=Pranav-0710&show_icons=true&hide_border=true&theme=github_dark&rank_icon=github&title_color=22c55e&icon_color=2563eb" alt="GitHub stats" />
-<img width="49%" src="https://github-readme-streak-stats-eight.vercel.app?user=Pranav-0710&theme=github-dark-blue&hide_border=true&ring=22c55e&fire=22c55e&currStreakLabel=22c55e" alt="GitHub streak" />
+`Next.js` `React` `Three.js` `FastAPI` `Supabase` `PostGIS`
 
-<img width="98%" src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Pranav-0710&theme=github_dark" alt="Profile details" />
+<sub>[live demo](https://terrain-green.vercel.app)</sub>
 
-<img width="32%" src="https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=Pranav-0710&theme=github_dark" alt="Repos per language" />
-<img width="32%" src="https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=Pranav-0710&theme=github_dark" alt="Most commit language" />
-<img width="32%" src="https://github-profile-summary-cards.vercel.app/api/cards/productive-time?username=Pranav-0710&theme=github_dark&utcOffset=5.5" alt="Productive time" />
+</td>
+<td width="50%" valign="top">
 
-</div>
+#### [neuroselect](https://github.com/Pranav-0710/neuroselect)
+<sub>`status: baseline stage` · research codebase</sub>
 
----
+Reproducible groundwork for non-invasive brain-to-text decoding: a character-level CTC baseline on public SpanishBCBL MEG recordings, with documented label-mapping, alignment and CTC-geometry audits. No benchmark claimed yet.
 
-## What I Am Working Toward
+`Python` `PyTorch` `MNE` `NumPy` `SciPy` `pytest`
 
-<table>
-  <tr>
-    <td width="33%" valign="top">
-      <h3>Better ML basics</h3>
-      <p>Stronger understanding of supervised learning, evaluation, feature engineering, and error analysis.</p>
-    </td>
-    <td width="33%" valign="top">
-      <h3>More public projects</h3>
-      <p>Small but complete repositories with clear READMEs, demo links, metrics, and implementation notes.</p>
-    </td>
-    <td width="33%" valign="top">
-      <h3>Cleaner products</h3>
-      <p>Full-stack apps that connect backend logic, useful interfaces, and practical workflows.</p>
-    </td>
-  </tr>
+</td>
+</tr>
 </table>
 
 <details>
-  <summary><b>Collaboration note</b></summary>
-  <br />
-  <p>
-    I am open to internship opportunities, ML learning projects, AI-agent experiments, and full-stack collaborations where the scope is clear.
-  </p>
-</details>
-
----
-
-## Contribution Stream
-
-<div align="center">
-
-![GitHub contribution grid snake animation](https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/github-contribution-grid-snake-dark.svg)
-
-</div>
-
----
-
-<div align="center">
-
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=18&duration=2600&pause=900&color=38BDF8&center=true&vCenter=true&width=900&lines=Learning+ML.+Building+projects.+Improving+every+iteration.;If+you+work+on+ML%2C+AI+agents%2C+or+full-stack+products%2C+let's+connect." alt="closing typing line" />
-
+<summary><b>more in ~/projects</b></summary>
 <br />
 
-[![Connect on LinkedIn](https://img.shields.io/badge/Connect%20on%20LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/jey-pranav-783761278)
-[![Read on Medium](https://img.shields.io/badge/Read%20on%20Medium-000000?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@pranavkanth07)
-[![Email Me](https://img.shields.io/badge/Email%20Me-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:pranavkanth07@gmail.com)
+| repo | what it is | stack |
+| --- | --- | --- |
+| [PRO-TECHT](https://github.com/Pranav-0710/PRO-TECHT) | Service-center portal: job tracking, warranties, customer chat, reports, role-based views | React · TypeScript · shadcn/ui · Supabase |
+| [AI_ENGG](https://github.com/Pranav-0710/AI_ENGG) | AI engineering roadmap (15 projects, 5 phases) with Claude Code hooks that block AI edits to core logic | Bash · Python |
+| [ChurnPrediction-](https://github.com/Pranav-0710/ChurnPrediction-) | Telco churn classifier with a Streamlit app and a Power BI report | scikit-learn · Streamlit · Power BI |
+| [SalesPrediction](https://github.com/Pranav-0710/SalesPrediction) | 24-month retail sales forecast with confidence intervals | pandas · Prophet · Power BI |
+| [f1-MODEL](https://github.com/Pranav-0710/f1-MODEL) | My first ML project: Formula 1 prediction notebook | pandas · scikit-learn |
 
-<img src="https://capsule-render.vercel.app/api?type=waving&height=130&section=footer&color=0:22c55e,35:2563eb,75:0f766e,100:020617" alt="Footer wave" />
+</details>
 
-</div>
-  
+<picture>
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/prompt-stack-mobile.svg" />
+  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/prompt-stack.svg" alt="jey@github ~ $ cat ~/.stack" />
+</picture>
+
+| layer | tools |
+| --- | --- |
+| `languages` | <img src="https://img.shields.io/badge/Python-161b22?style=flat-square&logo=python&logoColor=39d353" alt="Python" /> <img src="https://img.shields.io/badge/TypeScript-161b22?style=flat-square&logo=typescript&logoColor=39d353" alt="TypeScript" /> <img src="https://img.shields.io/badge/JavaScript-161b22?style=flat-square&logo=javascript&logoColor=39d353" alt="JavaScript" /> <img src="https://img.shields.io/badge/SQL-161b22?style=flat-square&logo=postgresql&logoColor=39d353" alt="SQL" /> <img src="https://img.shields.io/badge/Bash-161b22?style=flat-square&logo=gnubash&logoColor=39d353" alt="Bash" /> |
+| `ml · data` | <img src="https://img.shields.io/badge/PyTorch-161b22?style=flat-square&logo=pytorch&logoColor=39d353" alt="PyTorch" /> <img src="https://img.shields.io/badge/scikit--learn-161b22?style=flat-square&logo=scikitlearn&logoColor=39d353" alt="scikit-learn" /> <img src="https://img.shields.io/badge/pandas-161b22?style=flat-square&logo=pandas&logoColor=39d353" alt="pandas" /> <img src="https://img.shields.io/badge/NumPy-161b22?style=flat-square&logo=numpy&logoColor=39d353" alt="NumPy" /> <img src="https://img.shields.io/badge/Jupyter-161b22?style=flat-square&logo=jupyter&logoColor=39d353" alt="Jupyter" /><br /><sub>also: Prophet · MNE · Matplotlib · Seaborn</sub> |
+| `llm · agents` | <img src="https://img.shields.io/badge/Hugging%20Face-161b22?style=flat-square&logo=huggingface&logoColor=39d353" alt="Hugging Face" /> <img src="https://img.shields.io/badge/Claude%20Code-161b22?style=flat-square&logo=claude&logoColor=39d353" alt="Claude Code" /><br /><sub>also: Unsloth · LoRA / GRPO fine-tuning · OpenEnv · Groq and OpenAI APIs</sub> |
+| `backend` | <img src="https://img.shields.io/badge/FastAPI-161b22?style=flat-square&logo=fastapi&logoColor=39d353" alt="FastAPI" /> <img src="https://img.shields.io/badge/PostgreSQL-161b22?style=flat-square&logo=postgresql&logoColor=39d353" alt="PostgreSQL" /> <img src="https://img.shields.io/badge/Supabase-161b22?style=flat-square&logo=supabase&logoColor=39d353" alt="Supabase" /><br /><sub>also: Pydantic · PostGIS · Uvicorn</sub> |
+| `frontend` | <img src="https://img.shields.io/badge/React-161b22?style=flat-square&logo=react&logoColor=39d353" alt="React" /> <img src="https://img.shields.io/badge/Next.js-161b22?style=flat-square&logo=nextdotjs&logoColor=39d353" alt="Next.js" /> <img src="https://img.shields.io/badge/Vite-161b22?style=flat-square&logo=vite&logoColor=39d353" alt="Vite" /> <img src="https://img.shields.io/badge/Tailwind%20CSS-161b22?style=flat-square&logo=tailwindcss&logoColor=39d353" alt="Tailwind CSS" /> <img src="https://img.shields.io/badge/Three.js-161b22?style=flat-square&logo=threedotjs&logoColor=39d353" alt="Three.js" /><br /><sub>also: shadcn/ui · Framer Motion</sub> |
+| `ship · test` | <img src="https://img.shields.io/badge/Docker-161b22?style=flat-square&logo=docker&logoColor=39d353" alt="Docker" /> <img src="https://img.shields.io/badge/GitHub%20Actions-161b22?style=flat-square&logo=githubactions&logoColor=39d353" alt="GitHub Actions" /> <img src="https://img.shields.io/badge/Vercel-161b22?style=flat-square&logo=vercel&logoColor=39d353" alt="Vercel" /> <img src="https://img.shields.io/badge/pytest-161b22?style=flat-square&logo=pytest&logoColor=39d353" alt="pytest" /><br /><sub>also: Vitest · Hugging Face Spaces · Render · Git</sub> |
+| `analytics` | <img src="https://img.shields.io/badge/Streamlit-161b22?style=flat-square&logo=streamlit&logoColor=39d353" alt="Streamlit" /><br /><sub>also: Power BI</sub> |
+
+<picture>
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/prompt-links-mobile.svg" />
+  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/prompt-links.svg" alt="jey@github ~ $ ./links.sh" />
+</picture>
+
+<p align="center">
+  <a href="https://www.linkedin.com/in/jey-pranav-783761278/"><img src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/btn-linkedin.svg" height="36" alt="LinkedIn: linkedin.com/in/jey-pranav-783761278" /></a>
+  &nbsp;
+  <a href="mailto:pranavkanth07@gmail.com"><img src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/btn-email.svg" height="36" alt="Email: pranavkanth07@gmail.com" /></a>
+</p>
+
+<p align="center"><sub>linkedin.com/in/jey-pranav-783761278 · pranavkanth07@gmail.com</sub></p>

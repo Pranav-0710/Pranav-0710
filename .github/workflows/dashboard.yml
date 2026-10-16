@@ -1,0 +1,67 @@
+name: Profile dashboard
+
+# Rebuilds the terminal-style dashboard panels (.github/scripts/dashboard.py)
+# from public GitHub data and publishes them to the `output` branch, which
+# README.md reads from. Replaces the old snake.yaml workflow.
+on:
+  schedule:
+    - cron: "17 0 * * *" # daily 00:17 UTC (05:47 IST)
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/dashboard.yml"
+      - ".github/scripts/**"
+      - "assets/portrait.*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-dashboard
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Start from the last published panels: if generation fails (API outage,
+      # rate limit), the previous SVGs are republished instead of broken images.
+      - name: Restore last published panels
+        uses: actions/checkout@v7
+        continue-on-error: true
+        with:
+          ref: output
+          path: last
+
+      - name: Prepare dist
+        run: |
+          mkdir -p dist
+          for f in contributions whoami languages; do
+            for v in "" "-mobile"; do
+              if [ -f "last/$f$v.svg" ]; then cp "last/$f$v.svg" dist/; fi
+            done
+          done
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Generate panels
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python -m pip install --quiet pillow
+          python .github/scripts/dashboard.py "${{ github.repository_owner }}" dist
+
+      - name: Publish to output branch
+        uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: output
+          build_dir: dist
+          commit_message: "chore: refresh profile dashboard"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
