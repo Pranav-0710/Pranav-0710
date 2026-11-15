@@ -6,6 +6,10 @@ GitHub Action draws from **public** GitHub data once a day and publishes to the
 
 ```
 README.md                         layout and text (projects, stack, links)
+assets/hero*.svg                  animated intro panel: name, role, pitch, stack summary (desktop + -mobile)
+assets/card-*.svg                 looping illustration above each featured project
+assets/footer*.svg                closing prompt over flowing wave lines
+.github/scripts/static_assets.py  draws every SVG in assets/ except the buttons (stdlib only)
 assets/prompt-*.svg               "jey@github ~ $ …" section prompts (desktop + -mobile)
 assets/btn-*.svg                  link buttons
 .github/scripts/dashboard.py      draws the data panels (stdlib + Pillow)
@@ -57,6 +61,14 @@ No secrets, PATs or external services are needed. The workflow asks for
       `PORTRAIT_CROP = (0, 0, 1, 1)`. With a cartoon avatar, also try `PORTRAIT_STYLE = "ascii"`.
       Pushing a portrait re-runs the workflow.
 - [ ] **Caption and prompt.** Change `ROLE` and `PROMPT_USER` at the top of `dashboard.py`.
+- [ ] **Hero, cards and `now.md`.** The intro panel, typed prompts, project illustrations and
+      footer are drawn by `.github/scripts/static_assets.py`. Edit the text settings at the top,
+      run `python .github/scripts/static_assets.py`, and commit the changed files in `assets/`.
+      The `cat ~/now.md` row is plain Markdown in `README.md`, so update it when what you are
+      building changes.
+- [ ] **Animations.** GitHub removes scripts and CSS from READMEs, so all motion is CSS
+      keyframes inside the SVGs. Visitors with "reduce motion" switched on see a still frame
+      of each one.
 - [ ] **Removed from the old README:** Instagram, the view counter, the snake and the
       typing banner. The Medium link was also removed because the profile has no posts
       yet. Add it back to `./links.sh` when you publish.
@@ -97,5 +109,5 @@ from what the workflow publishes. Only the workflow's output is public.
       and the heatmap shows 26 weeks.
 - [ ] Numbers match your public profile: contributions in the last year, followers,
       public repos.
-- [ ] Every link opens: four project repos, Hugging Face Space and model, Terrain demo,
-      LinkedIn, email.
+- [ ] Every link opens: six featured repos plus planet-hunters and Krama, the ReliefRoute
+      app, Hugging Face Space and model, Terrain demo, LinkedIn, email.

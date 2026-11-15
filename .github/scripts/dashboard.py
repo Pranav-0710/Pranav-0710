@@ -21,7 +21,7 @@ import urllib.request
 from collections import OrderedDict
 from datetime import date, datetime, timezone
 
-ROLE = "ML / AI engineering · full-stack"
+ROLE = "Software developer · ML / AI"
 PROMPT_USER = "jey"
 # Portrait source: this file if it exists, otherwise the GitHub avatar.
 PORTRAIT_FILE = "assets/portrait.png"
