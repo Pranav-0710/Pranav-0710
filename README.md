@@ -7,12 +7,22 @@
 
 <picture>
   <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/hero-mobile.svg" />
-  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/hero.svg" alt="jey@github ~ $ cat README.md: Jey Pranav, software developer working across ML / AI engineering and full-stack. I build software where models meet real users: voice AI, LLM agents, RL environments, 3D data products and brain-to-text research. Open to internships and collaborations." />
+  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/hero.svg" alt="jey@github ~ $ cat README.md: Jey Pranav, ML / AI engineering. I build software where models meet real users: voice AI, LLM agents, RL environments, 3D data products and brain-to-text research. Open to internships and collaborations." />
 </picture>
 
 <picture>
   <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/whoami-mobile.svg" />
   <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/whoami.svg" alt="jey@github ~ $ whoami: halftone portrait of Jey Pranav next to current and longest streak, contributions, active days, best day, average per active day, and contributions per month" />
+</picture>
+
+<picture>
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/pulse-mobile.svg" />
+  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/pulse.svg" alt="jey@github ~ $ git log --since='30 days': my latest commits across public repositories and the most active repositories over the last 30 days. Updated daily." />
+</picture>
+
+<picture>
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/contributions-mobile.svg" />
+  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/contributions.svg" alt="jey@github ~ $ ./contributions.sh: 3D skyline of the last year of contributions, one bar per day" />
 </picture>
 
 <picture>
@@ -64,16 +74,6 @@
 </sub></p>
 
 <picture>
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/pulse-mobile.svg" />
-  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/pulse.svg" alt="jey@github ~ $ git log --since='30 days': my latest commits across public repositories and the most active repositories over the last 30 days. Updated daily." />
-</picture>
-
-<picture>
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/contributions-mobile.svg" />
-  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/contributions.svg" alt="jey@github ~ $ ./contributions.sh: 3D skyline of the last year of contributions, one bar per day" />
-</picture>
-
-<picture>
   <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/languages-mobile.svg" />
   <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/languages.svg" alt="jey@github ~ $ ./languages.sh: share of code by language across public repositories" />
 </picture>
@@ -83,7 +83,7 @@
   <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/prompt-more.svg" alt="jey@github ~ $ ls ~/projects --all" />
 </picture>
 
-<details>
+<details open>
 <summary><b>more projects</b> · reliefroute, signal-hunters, Krama and more</summary>
 <br />
 

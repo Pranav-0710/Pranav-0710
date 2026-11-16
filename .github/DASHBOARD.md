@@ -76,8 +76,8 @@ No secrets, PATs or external services are needed. The workflow asks for
 ## Manual configuration
 
 - [ ] **Push and run the workflow.** Until the first run, the data panels 404.
-- [ ] **GitHub bio is empty.** Profile → Edit profile. Suggested: *ML / AI engineering
-      and full-stack. Voice AI, RL environments, 3D data products.*
+- [ ] **GitHub bio is empty.** Profile → Edit profile. Suggested: *ML / AI engineering.
+      Voice AI, LLM agents, RL environments, brain-to-text research.*
 - [ ] **No pinned repositories.** Suggested pins: DataEngEnv, dhwani-desk, Terrain, neuroselect.
 - [ ] **Empty repo descriptions** on DataEngEnv, Terrain, neuroselect and others. Descriptions show
       in search, pins and link previews.

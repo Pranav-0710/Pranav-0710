@@ -17,8 +17,8 @@ from collections import namedtuple
 
 USER = "jey"
 NAME = "Jey Pranav"
-ROLE_MAIN = "Software developer"
-ROLE_REST = "ML / AI engineering · full-stack"
+ROLE_MAIN = "ML / AI engineering"
+ROLE_REST = ""                     # optional muted second part, e.g. "voice AI · agents"
 PITCH = ["I build software where models meet real users:",
          "voice AI, LLM agents, RL environments, 3D data",
          "products and brain-to-text research."]
@@ -144,11 +144,12 @@ def hero(mobile):
     d = t0 + .6
     if mobile:
         b.append(f'<g class="in" style="animation-delay:{d:.1f}s" font-size="16"><text x="{pad}" y="{ny + 36}" fill="{GREEN}">{esc(ROLE_MAIN)}</text>'
-                 f'<text x="{pad}" y="{ny + 60}" fill="{MUTED}">{esc(ROLE_REST)}</text></g>')
-        py, step, fs, lines = ny + 100, 24, 15.5, PITCH_MOBILE
+                 + (f'<text x="{pad}" y="{ny + 60}" fill="{MUTED}">{esc(ROLE_REST)}</text>' if ROLE_REST else '') + '</g>')
+        py, step, fs, lines = ny + (100 if ROLE_REST else 76), 24, 15.5, PITCH_MOBILE
     else:
         b.append(f'<text class="in" style="animation-delay:{d:.1f}s" x="{pad}" y="{ny + 32}" font-size="15">'
-                 f'<tspan fill="{GREEN}">{esc(ROLE_MAIN)}</tspan><tspan fill="{MUTED}"> · {esc(ROLE_REST)}</tspan></text>')
+                 f'<tspan fill="{GREEN}">{esc(ROLE_MAIN)}</tspan>'
+                 + (f'<tspan fill="{MUTED}"> · {esc(ROLE_REST)}</tspan>' if ROLE_REST else '') + '</text>')
         py, step, fs, lines = ny + 72, 22, 14, PITCH
     b.append(f'<g class="in" style="animation-delay:{d + .3:.1f}s" font-size="{fs}" fill="{TEXT}">'
              + "".join(f'<text x="{pad}" y="{py + i * step}">{esc(t)}</text>' for i, t in enumerate(lines)) + '</g>')
@@ -164,7 +165,7 @@ def hero(mobile):
                      f'<rect x="592" y="{y - 8}" width="3" height="30" rx="1.5" fill="{GREEN}"/>'
                      f'<text x="606" y="{y}" font-size="10" letter-spacing=".8" fill="{DIM}">{esc(k)}</text>'
                      f'<text x="606" y="{y + 20}" font-size="13.5" fill="{TEXT}">{esc(v)}</text></g>')
-    desc = f"{ROLE_MAIN}, {ROLE_REST}. {' '.join(PITCH)} {STATUS.capitalize()}."
+    desc = f"{ROLE_MAIN}{', ' + ROLE_REST if ROLE_REST else ''}. {' '.join(PITCH)} {STATUS.capitalize()}."
     return doc(w, h, f"{NAME}: {ROLE_MAIN.lower()}", desc, css, "".join(b), defs)
 
 
@@ -533,7 +534,7 @@ def main():
     for name, fn in (("reliefroute", card_reliefroute), ("signal-hunters", card_signal)):
         write("card-" + name, render_card(fn()))
     for i, spec in enumerate(PROJECTS):
-        write("project-" + spec["slug"], project_panel(spec, False, flip=i % 2 == 1))
+        write("project-" + spec["slug"], project_panel(spec, False, flip=False))   # flip=True mirrors a panel (scene right, text left)
         write("project-" + spec["slug"] + "-mobile", project_panel(spec, True, flip=False))
     animate_buttons()
 

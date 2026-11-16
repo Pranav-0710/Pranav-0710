@@ -23,16 +23,17 @@ import urllib.request
 from collections import OrderedDict
 from datetime import date, datetime, timedelta, timezone
 
-ROLE = "Software developer · ML / AI"
+ROLE = "ML / AI engineering"
 PROMPT_USER = "jey"
 # Portrait source: this file if it exists, otherwise the GitHub avatar.
 PORTRAIT_FILE = "assets/portrait.png"
 # left, top, right, bottom as fractions of the source image (tuned for the current avatar: face and hand at the mic).
 PORTRAIT_CROP = (0.30, 0.0, 0.80, 0.50)
-# "halftone": dot size follows how dark the photo is, so a subject in front of a bright wall reads as a shape.
+# "halftone": green dot matrix whose dots grow with the subject's tone, so a subject in front of a bright wall reads as a shape.
 # "ascii": character art, best with a cartoon or illustrated avatar on a plain background.
 PORTRAIT_STYLE = "halftone"
-HALFTONE_CELLS = 64
+HALFTONE_CELLS = 56
+SHADES = 4         # green levels used for the dots
 # The portrait loops: dots appear in staggered waves, hold, then dissolve.
 FADE_LAYERS = 4
 FADE_CYCLE = 7  # seconds per loop
@@ -181,23 +182,35 @@ def load_portrait(avatar_url):
 
 def halftone_svg(img, x, y, size):
     """Halftone dots, split into FADE_LAYERS groups so the portrait can dissolve in waves."""
-    from PIL import Image, ImageFilter
+    from PIL import Image, ImageFilter, ImageOps
     n = HALFTONE_CELLS
-    px = img.filter(ImageFilter.UnsharpMask(radius=2, percent=120, threshold=2)).resize((n, n), Image.LANCZOS).load()
+    # Subject tone: invert, equalise so hair and face both keep texture, then blend in outlines for the facial detail.
+    inv = ImageOps.invert(img)
+    soft = Image.blend(inv, ImageOps.equalize(inv), 0.6)
+    edges = ImageOps.autocontrast(inv.filter(ImageFilter.GaussianBlur(1.1)).filter(ImageFilter.FIND_EDGES), cutoff=1)
+    px = Image.blend(soft, edges, 0.28).resize((n, n), Image.LANCZOS).load()
     cell = size / n
-    layers = [[] for _ in range(FADE_LAYERS)]
+    bg = [int(BG[i:i + 2], 16) for i in (1, 3, 5)]
+    fg = [int(GREEN[i:i + 2], 16) for i in (1, 3, 5)]
+    shades = []                                    # brighter areas get a brighter green
+    for b in range(SHADES):
+        f = 0.55 + 0.45 * (b + .5) / SHADES
+        shades.append("#%02x%02x%02x" % tuple(round(bg[k] + (fg[k] - bg[k]) * f) for k in range(3)))
+    groups = {}
     for j in range(n):
         for i in range(n):
-            v = (1 - (px[i, j] / 255) ** 0.9) ** 0.9
+            v = px[i, j] / 255
             dx, dy = (i - n / 2) / (n / 2), (j - n * 0.42) / (n / 2)
             fade = max(0.0, 1 - 1.5 * max(0.0, (dx * dx + dy * dy) ** 0.5 - 0.45))   # soft circular vignette
-            r = cell * 0.54 * v * fade
-            if r < cell * 0.07:
+            r = cell * 0.56 * v ** 0.95 * fade
+            if r < cell * 0.08:
                 continue
             # Deterministic scatter, so the layers do not change between daily runs.
             k = ((i * 73856093) ^ (j * 19349663)) % FADE_LAYERS
-            layers[k].append(f'<circle cx="{x + (i + .5) * cell:.1f}" cy="{y + (j + .5) * cell:.1f}" r="{r:.2f}"/>')
-    return "".join(f'<g class="pl pl{k}" fill="{TEXT}">{"".join(c)}</g>' for k, c in enumerate(layers))
+            b = min(SHADES - 1, int(v * SHADES))
+            groups.setdefault((k, b), []).append(
+                f'<circle cx="{x + (i + .5) * cell:.1f}" cy="{y + (j + .5) * cell:.1f}" r="{r:.2f}"/>')
+    return "".join(f'<g class="pl pl{k}" fill="{shades[b]}">{"".join(c)}</g>' for (k, b), c in sorted(groups.items()))
 
 
 def ascii_rows(img, cols, rows):
