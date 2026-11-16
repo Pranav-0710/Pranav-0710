@@ -30,48 +30,33 @@
   <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/prompt-projects.svg" alt="jey@github ~ $ ls ~/projects --featured" />
 </picture>
 
-<a href="https://github.com/Pranav-0710/DataEngEnv"><picture>
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/project-dataengenv-mobile.svg" />
-  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/project-dataengenv.svg" alt="DataEngEnv, from the Meta AI x Hugging Face OpenEnv Hackathon 2026. PipelineOps Arena is a 4-stage environment where an LLM agent repairs a broken ML pipeline, with rewards from running the fixed code rather than an LLM judge. 4 cascading stages, average reward 0.25 to 0.38 in a 25-step GRPO run, live on Hugging Face. Python, FastAPI, Docker, OpenEnv, Unsloth, LoRA, GRPO, LLaMA 3.1 8B fine-tune." />
-</picture></a>
+<picture>
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/projects-1-mobile.svg" />
+  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/projects-1.svg" alt="Two projects. DataEngEnv, from the Meta AI x Hugging Face OpenEnv Hackathon 2026: PipelineOps Arena is a 4-stage environment where an LLM agent repairs a broken ML pipeline, with rewards from running the fixed code rather than an LLM judge. 4 cascading stages, average reward 0.25 to 0.38 in a 25-step GRPO run, live on Hugging Face. Python, FastAPI, Docker, OpenEnv, Unsloth, LoRA, GRPO, LLaMA 3.1 8B fine-tune. dhwani-desk, for the Gnani AI Great Indian AI Internship Challenge: a Kannada voice helpline for civic complaints that hands danger to a person first, with every decision made locally on a CPU. 30 of 34 hazards caught on held-out test calls, department macro-F1 0.71 up from 0.13, first reply in about 1.5 seconds. Python, FastAPI, React, TypeScript, Laya, no LLM in the call." />
+</picture>
 
-<p align="center"><sub>
-  <a href="https://github.com/Pranav-0710/DataEngEnv">repo</a> &nbsp;·&nbsp;
-  <a href="https://huggingface.co/spaces/CoBeDigger/DataEngEnv">live Space</a> &nbsp;·&nbsp;
-  <a href="https://huggingface.co/CoBeDigger/pipelineops-arena-llama3-grpo">trained adapter</a>
-</sub></p>
+<table>
+<tr>
+<td width="50%" align="center"><sub><b>DataEngEnv</b><br />
+<a href="https://github.com/Pranav-0710/DataEngEnv">repo</a> · <a href="https://huggingface.co/spaces/CoBeDigger/DataEngEnv">live Space</a> · <a href="https://huggingface.co/CoBeDigger/pipelineops-arena-llama3-grpo">trained adapter</a></sub></td>
+<td width="50%" align="center"><sub><b>dhwani-desk</b><br />
+<a href="https://github.com/Pranav-0710/dhwani-desk">repo</a> · <a href="https://lnkd.in/p/gNMNPkh4">demo video</a> · <a href="https://github.com/Pranav-0710/dhwani-desk/blob/main/docs/PITCH.md">one-page pitch</a></sub></td>
+</tr>
+</table>
 
-<a href="https://github.com/Pranav-0710/dhwani-desk"><picture>
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/project-dhwani-desk-mobile.svg" />
-  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/project-dhwani-desk.svg" alt="dhwani-desk, for the Gnani AI Great Indian AI Internship Challenge. A Kannada voice helpline for civic complaints that hands danger to a person first, with every decision made locally on a CPU. 30 of 34 hazards caught on held-out test calls, department macro-F1 0.71 up from 0.13, first reply in about 1.5 seconds. Python, FastAPI, React, TypeScript, Laya, no LLM in the call." />
-</picture></a>
+<picture>
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/projects-2-mobile.svg" />
+  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/projects-2.svg" alt="Two projects. Terrain, built for the OpenAI Hackathon: news intelligence on a 3D WebGL globe that compares how outlets around the world frame the same event, with LLM consensus and contradiction analysis. GDELT and RSS ingestion, a 30-day scenario simulator. Next.js, React, Three.js, FastAPI, Supabase, PostGIS. neuroselect, a research codebase at baseline stage: reproducible groundwork for non-invasive brain-to-text decoding, a character-level CTC baseline on public MEG data, with audits first. 306 MEG channels, 8 real trials extracted and audited, processed at 50 Hz. No benchmark claimed. Python, PyTorch, MNE, NumPy, SciPy, pytest." />
+</picture>
 
-<p align="center"><sub>
-  <a href="https://github.com/Pranav-0710/dhwani-desk">repo</a> &nbsp;·&nbsp;
-  <a href="https://lnkd.in/p/gNMNPkh4">demo video</a> &nbsp;·&nbsp;
-  <a href="https://github.com/Pranav-0710/dhwani-desk/blob/main/docs/PITCH.md">one-page pitch</a>
-</sub></p>
-
-<a href="https://github.com/Pranav-0710/Terrain"><picture>
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/project-terrain-mobile.svg" />
-  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/project-terrain.svg" alt="Terrain, built for the OpenAI Hackathon. News intelligence on a 3D WebGL globe that compares how outlets around the world frame the same event, with LLM consensus and contradiction analysis. GDELT and RSS ingestion, a 30-day scenario simulator. Next.js, React, Three.js, FastAPI, Supabase, PostGIS." />
-</picture></a>
-
-<p align="center"><sub>
-  <a href="https://github.com/Pranav-0710/Terrain">repo</a> &nbsp;·&nbsp;
-  <a href="https://terrain-green.vercel.app">live demo</a>
-</sub></p>
-
-<a href="https://github.com/Pranav-0710/neuroselect"><picture>
-  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/project-neuroselect-mobile.svg" />
-  <img width="100%" src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/project-neuroselect.svg" alt="neuroselect, a research codebase at baseline stage. Reproducible groundwork for non-invasive brain-to-text decoding: a character-level CTC baseline on public MEG data, with audits first. 306 MEG channels, 8 real trials extracted and audited, processed at 50 Hz. No benchmark claimed. Python, PyTorch, MNE, NumPy, SciPy, pytest." />
-</picture></a>
-
-<p align="center"><sub>
-  <a href="https://github.com/Pranav-0710/neuroselect">repo</a> &nbsp;·&nbsp;
-  <a href="https://github.com/Pranav-0710/neuroselect#current-status">current status</a> &nbsp;·&nbsp;
-  <a href="https://huggingface.co/datasets/bcbl190626/SpanishBCBL">SpanishBCBL dataset</a>
-</sub></p>
+<table>
+<tr>
+<td width="50%" align="center"><sub><b>Terrain</b><br />
+<a href="https://github.com/Pranav-0710/Terrain">repo</a> · <a href="https://terrain-green.vercel.app">live demo</a></sub></td>
+<td width="50%" align="center"><sub><b>neuroselect</b><br />
+<a href="https://github.com/Pranav-0710/neuroselect">repo</a> · <a href="https://github.com/Pranav-0710/neuroselect#current-status">current status</a> · <a href="https://huggingface.co/datasets/bcbl190626/SpanishBCBL">SpanishBCBL dataset</a></sub></td>
+</tr>
+</table>
 
 <picture>
   <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/output/languages-mobile.svg" />

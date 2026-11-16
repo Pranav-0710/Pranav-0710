@@ -8,7 +8,7 @@ SVGs in `assets/`.
 ```
 README.md                         layout, links and the "more projects" fold-out
 assets/hero*.svg                  animated intro panel: name, role, pitch, stack summary (desktop + -mobile)
-assets/project-*.svg              one wide panel per featured project: animated scene, three numbers, stack
+assets/projects-*.svg             two featured projects per image (side by side, stacked on a phone): animated scene, three numbers, stack
 assets/card-*.svg                 small looping illustrations used in the "more projects" fold-out
 assets/footer*.svg                closing prompt over flowing wave lines
 assets/prompt-*.svg               "jey@github ~ $ …" section prompts (desktop + -mobile)
@@ -129,11 +129,11 @@ from what the workflow publishes. Only the workflow's output is public.
 ## Verification checklist
 
 - [ ] Actions run is green, and the `output` branch holds 8 SVGs.
-- [ ] Desktop (dark): hero, whoami, four project panels, activity feed, skyline and languages render.
+- [ ] Desktop (dark): hero, whoami, two project rows, activity feed, skyline and languages render.
       No broken-image icons.
 - [ ] Light mode: panels appear as dark cards with readable text.
 - [ ] Phone (under 600px wide, or the GitHub mobile site): the narrow `-mobile` panels load,
-      the project panels stack with the scene on top, and the skyline shows 26 weeks.
+      each project row stacks into two panels with the scene on top, and the skyline shows 26 weeks.
 - [ ] Numbers match your public profile: contributions in the last year, followers, public repos.
 - [ ] Project panel numbers still match each project's README.
 - [ ] Every link opens: the four repos, Hugging Face Space, trained adapter and dataset, dhwani-desk

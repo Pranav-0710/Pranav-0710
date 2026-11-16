@@ -389,6 +389,9 @@ def card_neuro():
 # Animated scene + one-sentence pitch + three numbers + stack. Every number comes from the
 # project's own README; edit the text here, run this script, commit the changed files in assets/.
 
+# "grid": two per row (least scrolling) | "zigzag": one wide panel per row, scene alternating sides | "rows": one wide panel per row
+PROJECT_LAYOUT = "grid"
+
 PROJECTS = [
     dict(slug="dataengenv", folder="DataEngEnv", repo="DataEngEnv", scene=card_dataeng, title="DataEngEnv",
          pill="Meta AI × Hugging Face OpenEnv Hackathon 2026",
@@ -453,7 +456,9 @@ def metric_tiles(metrics, x, y, total_w, h=72, gap=12):
     return "".join(out)
 
 
-def project_panel(spec, mobile, flip):
+def project_panel(spec, mobile, flip, min_h=0, parts_only=False):
+    """One project panel. mobile=True is the compact 480 px layout, which the 2-column rows reuse.
+    parts_only returns (w, h, css, body, defs, desc) so project_row can place two panels in one SVG."""
     sc = spec["scene"]()
     w = 480 if mobile else 1000
     css = ".rv{animation:rv .7s ease-out backwards}@keyframes rv{from{opacity:0;transform:translateY(8px)}}" + sc.css
@@ -500,13 +505,39 @@ def project_panel(spec, mobile, flip):
         parts += [media(mx, 52, 1), metric_tiles(spec["metrics"], mx, 188, 480)]
         h = max(bottom, 260) + 28
     parts.append(f'<g class="rv" style="animation-delay:.6s">{chips_svg}</g>')
-    h = int(math.ceil(h))
+    h = max(int(math.ceil(h)), int(min_h))
     right = "" if mobile else f"github.com/Pranav-0710/{spec['repo']}"
     body = chrome(0, 0, w, h, f"~/projects/{spec['folder']}", right) + "".join(parts)
     desc = (f"{spec['title']}. {spec['tagline']} "
             + " ".join(f"{v} {l} ({s})." for v, l, s in spec["metrics"])
             + f" Built with {', '.join(spec['chips'])}.")
+    if parts_only:
+        return w, h, css, body, sc.defs, desc
     return doc(w, h, f"{spec['title']}: project panel", desc, css, body, sc.defs)
+
+
+def project_row(specs, mobile):
+    """Two projects in one image: side by side on desktop, stacked on a phone.
+    The scenes use different class names, so their CSS can share one document."""
+    natural = [project_panel(s, True, False, parts_only=True) for s in specs]
+    rows_h = max(p[1] for p in natural)
+    if mobile:
+        panels, y, w, gap = [], 0, 480, 12
+        for s in specs:
+            p = project_panel(s, True, False, parts_only=True)
+            panels.append((0, y, p))
+            y += p[1] + gap
+        h = y - gap
+    else:
+        gap = 40
+        w = 480 * len(specs) + gap * (len(specs) - 1)
+        panels = [(i * (480 + gap), 0, project_panel(s, True, False, min_h=rows_h, parts_only=True)) for i, s in enumerate(specs)]
+        h = rows_h
+    css = "".join(dict.fromkeys(p[2] for _, _, p in panels))
+    body = "".join(f'<g transform="translate({x},{y})">{p[3]}</g>' for x, y, p in panels)
+    defs = "".join(p[4] for _, _, p in panels)
+    names = " and ".join(s["title"] for s in specs)
+    return doc(w, h, f"{names}: project panels", " ".join(p[5] for _, _, p in panels), css, body, defs)
 
 
 def animate_buttons():
@@ -533,9 +564,15 @@ def main():
     write("footer-mobile", footer(True))
     for name, fn in (("reliefroute", card_reliefroute), ("signal-hunters", card_signal)):
         write("card-" + name, render_card(fn()))
-    for i, spec in enumerate(PROJECTS):
-        write("project-" + spec["slug"], project_panel(spec, False, flip=False))   # flip=True mirrors a panel (scene right, text left)
-        write("project-" + spec["slug"] + "-mobile", project_panel(spec, True, flip=False))
+    if PROJECT_LAYOUT == "grid":                   # two projects per row: projects-1, projects-2
+        for n in range(0, len(PROJECTS), 2):
+            row = PROJECTS[n:n + 2]
+            write(f"projects-{n // 2 + 1}", project_row(row, False))
+            write(f"projects-{n // 2 + 1}-mobile", project_row(row, True))
+    else:                                          # one wide panel per project
+        for i, spec in enumerate(PROJECTS):
+            write("project-" + spec["slug"], project_panel(spec, False, flip=PROJECT_LAYOUT == "zigzag" and i % 2 == 1))
+            write("project-" + spec["slug"] + "-mobile", project_panel(spec, True, flip=False))
     animate_buttons()
 
 
