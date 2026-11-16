@@ -1,38 +1,45 @@
 """Render the terminal-style profile dashboard panels from public GitHub data.
 
 Writes, for both desktop and mobile layouts:
-  contributions[-mobile].svg  heatmap of the last year
-  whoami[-mobile].svg         portrait + streak/contribution tiles + monthly bars
-  languages[-mobile].svg      language share across public, non-fork repositories
+  whoami[-mobile].svg          halftone portrait + streak/contribution tiles + monthly bars
+  pulse[-mobile].svg           latest commits across public repos + most active repos (30 days)
+  contributions[-mobile].svg   3D skyline of the last year of contributions
+  languages[-mobile].svg       language share across public, non-fork repositories
 
 Usage (the workflow runs this daily with the built-in GITHUB_TOKEN):
     GITHUB_TOKEN=... python dashboard.py Pranav-0710 dist/
 
-Every number comes from the GitHub GraphQL API. Nothing is hardcoded except the
-settings below. If the API call fails, nothing is written, so the workflow
-republishes the previous cards.
+Every number comes from the GitHub API. Nothing is hardcoded except the settings
+below. If the API calls fail, nothing is written, so the workflow republishes the
+previous panels. Only public data is read: the repo list comes from /users/<login>/repos.
 """
-import base64
 import io
 import json
 import os
+import re
 import sys
+import urllib.error
 import urllib.request
 from collections import OrderedDict
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 
 ROLE = "Software developer · ML / AI"
 PROMPT_USER = "jey"
 # Portrait source: this file if it exists, otherwise the GitHub avatar.
 PORTRAIT_FILE = "assets/portrait.png"
-# left, top, right, bottom as fractions of the source image (tuned for the current avatar).
-PORTRAIT_CROP = (0.2, 0.0, 0.9, 0.7)
-# "dither": dot-matrix, works with photos. "ascii": character art, best with a cartoon or
-# illustrated avatar on a plain background.
-PORTRAIT_STYLE = "dither"
+# left, top, right, bottom as fractions of the source image (tuned for the current avatar: face and hand at the mic).
+PORTRAIT_CROP = (0.30, 0.0, 0.80, 0.50)
+# "halftone": dot size follows how dark the photo is, so a subject in front of a bright wall reads as a shape.
+# "ascii": character art, best with a cartoon or illustrated avatar on a plain background.
+PORTRAIT_STYLE = "halftone"
+HALFTONE_CELLS = 64
 # The portrait loops: dots appear in staggered waves, hold, then dissolve.
 FADE_LAYERS = 4
 FADE_CYCLE = 7  # seconds per loop
+# Activity feed: how many recent commits to list, and the window for "most active repos".
+FEED_ROWS = 8
+PULSE_DAYS = 30
+REPO_COLORS = ["#39d353", "#58a6ff", "#d29922", "#bc8cff", "#56d4dd", "#f0883e", "#ff7eb6", "#a5d6ff"]
 
 BG, PANEL, BAR, BORDER, GRID = "#0d1117", "#0d1117", "#161b22", "#30363d", "#21262d"
 TEXT, MUTED, DIM = "#c9d1d9", "#8b949e", "#6e7681"
@@ -169,56 +176,28 @@ def load_portrait(avatar_url):
     w, h = img.size
     l, t, r, b = PORTRAIT_CROP
     img = img.crop((int(l * w), int(t * h), int(r * w), int(b * h)))
-    return ImageOps.autocontrast(img, cutoff=1)
+    return ImageOps.autocontrast(img, cutoff=1.5)
 
 
-def fade_css(size):
-    """Looping dissolve for the portrait layers, with a scan line sweeping in."""
-    stagger = 0.3
-    return ('<style>'
-            f'.pl{{animation:pl {FADE_CYCLE}s ease-in-out infinite backwards}}'
-            '@keyframes pl{0%{opacity:0}10%{opacity:1}65%{opacity:1}78%{opacity:0}100%{opacity:0}}'
-            + "".join(f'.pl{k}{{animation-delay:{k * stagger:.1f}s}}' for k in range(FADE_LAYERS))
-            + f'.scan{{opacity:0;animation:scan {FADE_CYCLE}s linear infinite}}'
-            f'@keyframes scan{{0%{{opacity:.85;transform:translateY(0)}}'
-            f'22%{{opacity:.85;transform:translateY({size}px)}}23%,100%{{opacity:0;transform:translateY({size}px)}}}}'
-            '</style>')
-
-
-def scan_line(x, y, size):
-    return (f'<g class="scan"><rect x="{x}" y="{y - 4}" width="{size}" height="10" fill="{GREEN}" opacity=".12"/>'
-            f'<rect x="{x}" y="{y}" width="{size}" height="2" fill="{GREEN}"/></g>')
-
-
-def dither_svg(img, x, y, size, color=TEXT):
-    """1-bit Floyd–Steinberg dot matrix, split into FADE_LAYERS transparent PNGs."""
-    from PIL import Image, ImageEnhance
-    pitch = 4
-    n = size // pitch
-    dots = ImageEnhance.Contrast(img).enhance(1.3).resize((n, n), Image.LANCZOS).convert("1")
-    rgb = tuple(int(color[i:i + 2], 16) for i in (1, 3, 5))
-    layers = []
-    for _ in range(FADE_LAYERS):
-        layer = Image.new("P", (n * pitch, n * pitch), 0)
-        layer.putpalette([0, 0, 0, *rgb])
-        layers.append(layer)
-    px, outs = dots.load(), [layer.load() for layer in layers]
+def halftone_svg(img, x, y, size):
+    """Halftone dots, split into FADE_LAYERS groups so the portrait can dissolve in waves."""
+    from PIL import Image, ImageFilter
+    n = HALFTONE_CELLS
+    px = img.filter(ImageFilter.UnsharpMask(radius=2, percent=120, threshold=2)).resize((n, n), Image.LANCZOS).load()
+    cell = size / n
+    layers = [[] for _ in range(FADE_LAYERS)]
     for j in range(n):
         for i in range(n):
-            if px[i, j]:
-                # Deterministic scatter, so the layers do not change between daily runs.
-                out = outs[((i * 73856093) ^ (j * 19349663)) % FADE_LAYERS]
-                for dy in range(pitch - 1):
-                    for dx in range(pitch - 1):
-                        out[i * pitch + dx, j * pitch + dy] = 1
-    parts = []
-    for k, layer in enumerate(layers):
-        buf = io.BytesIO()
-        layer.save(buf, "PNG", transparency=0, optimize=True)
-        data = base64.b64encode(buf.getvalue()).decode()
-        parts.append(f'<image class="pl pl{k}" x="{x}" y="{y}" width="{n * pitch}" height="{n * pitch}" '
-                     f'style="image-rendering:pixelated" href="data:image/png;base64,{data}"/>')
-    return "".join(parts)
+            v = (1 - (px[i, j] / 255) ** 0.9) ** 0.9
+            dx, dy = (i - n / 2) / (n / 2), (j - n * 0.42) / (n / 2)
+            fade = max(0.0, 1 - 1.5 * max(0.0, (dx * dx + dy * dy) ** 0.5 - 0.45))   # soft circular vignette
+            r = cell * 0.54 * v * fade
+            if r < cell * 0.07:
+                continue
+            # Deterministic scatter, so the layers do not change between daily runs.
+            k = ((i * 73856093) ^ (j * 19349663)) % FADE_LAYERS
+            layers[k].append(f'<circle cx="{x + (i + .5) * cell:.1f}" cy="{y + (j + .5) * cell:.1f}" r="{r:.2f}"/>')
+    return "".join(f'<g class="pl pl{k}" fill="{TEXT}">{"".join(c)}</g>' for k, c in enumerate(layers))
 
 
 def ascii_rows(img, cols, rows):
@@ -243,10 +222,28 @@ def ascii_svg(rows, x0, y0, cw, rh, size):
     return "".join(f'<g class="pl pl{k}" font-size="{size}">{"".join(g)}</g>' for k, g in enumerate(groups))
 
 
+def fade_css(size):
+    """Looping dissolve for the portrait layers, with a scan line sweeping in."""
+    stagger = 0.3
+    return ('<style>'
+            f'.pl{{animation:pl {FADE_CYCLE}s ease-in-out infinite backwards}}'
+            '@keyframes pl{0%{opacity:0}10%{opacity:1}65%{opacity:1}78%{opacity:0}100%{opacity:0}}'
+            + "".join(f'.pl{k}{{animation-delay:{k * stagger:.1f}s}}' for k in range(FADE_LAYERS))
+            + f'.scan{{opacity:0;animation:scan {FADE_CYCLE}s linear infinite}}'
+            f'@keyframes scan{{0%{{opacity:.85;transform:translateY(0)}}'
+            f'22%{{opacity:.85;transform:translateY({size}px)}}23%,100%{{opacity:0;transform:translateY({size}px)}}}}'
+            '</style>')
+
+
+def scan_line(x, y, size):
+    return (f'<g class="scan"><rect x="{x}" y="{y - 4}" width="{size}" height="10" fill="{GREEN}" opacity=".12"/>'
+            f'<rect x="{x}" y="{y}" width="{size}" height="2" fill="{GREEN}"/></g>')
+
+
 def portrait_svg(img, name, x, y, size):
     """Portrait block filling a size×size square at (x, y), looping fade in and out."""
-    if img is not None and PORTRAIT_STYLE == "dither":
-        art = dither_svg(img, x, y, size, MUTED)
+    if img is not None and PORTRAIT_STYLE == "halftone":
+        art = halftone_svg(img, x, y, size)
     elif img is not None:
         cols = 60
         cw = size / cols
@@ -284,46 +281,88 @@ def svg(w, h, title, desc, body):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" '
             f'role="img" aria-labelledby="t d"><title id="t">{esc(title)}</title><desc id="d">{esc(desc)}</desc>'
             f'<style>.fade{{animation:fade .6s ease-out backwards}}@keyframes fade{{from{{opacity:0}}}}'
-            # Reduced motion keeps opacity fades (no movement) and drops the moving scan line.
-            f'@media (prefers-reduced-motion:reduce){{.scan{{animation:none!important}}}}</style>'
+            f'.bar{{transform-box:fill-box;transform-origin:50% 100%;animation:grow .8s cubic-bezier(.2,.7,.2,1) backwards}}'
+            f'@keyframes grow{{from{{transform:scaleY(0)}}}}'
+            # Reduced motion keeps opacity fades (no movement) and drops the scan line and the grow-in.
+            f'@media (prefers-reduced-motion:reduce){{.scan{{animation:none!important}}.bar{{animation-name:fade!important}}}}</style>'
             f'<rect width="{w}" height="{h}" rx="10" fill="{BG}"/><g font-family="{FONT}">{body}</g></svg>\n')
 
 
 # ── panels ──────────────────────────────────────────────────────────────────
 
+def shade(color, f):
+    """Lighten (f > 0) or darken (f < 0) a #rrggbb colour."""
+    rgb = [int(color[i:i + 2], 16) for i in (1, 3, 5)]
+    rgb = [round(v + (255 - v) * f) if f > 0 else round(v * (1 + f)) for v in rgb]
+    return "#%02x%02x%02x" % tuple(rgb)
+
+
 def contributions(s, mobile):
+    """3D skyline: one bar per day. Heights use a square-root scale so one huge day does not flatten the rest."""
     weeks = s["weeks"][-26:] if mobile else s["weeks"]
     w = 480 if mobile else 1000
-    pitch, cell = (15, 12) if mobile else (16, 13)
-    grid_w = len(weeks) * pitch
-    gx = (w - grid_w + 30) / 2
-    py, gy = 44, 44 + 58
-    h = gy + 7 * pitch + (80 if mobile else 58)
+    pitch = 14.2 if mobile else 16.4
+    bw = pitch * 0.74                              # bar width
+    ddx, ddy = pitch * 0.32, pitch * 0.25          # depth of one bar, drawn up and to the right
+    rx, ry = pitch * 0.34, pitch * 0.32            # offset between rows: back rows sit higher and further right
+    hmax = 72 if mobile else 100
+    peak = max(d["contributionCount"] for wk in weeks for d in wk["contributionDays"]) or 1
+    span = len(weeks) * pitch + 6 * rx + ddx
+    gx = (w - span) / 2
+    y_front = 44 + 28 + 40 + hmax + 6 * ry + ddy   # baseline of the front row
+    foot = y_front + 52
+    h = foot + (24 if mobile else 0) + 24
     out = [prompt_line(w / 2, 24, "./contributions.sh", 16 if mobile else 14),
-           panel(0, py, w, h - py, "contributions.log", "last 6 months" if mobile else "last 12 months")]
+           panel(0, 44, w, h - 44, "contributions.skyline", "last 6 months" if mobile else "last 12 months")]
+    peak_at = None
+    for r in range(7):                             # Sunday is the back row, so nearer bars are drawn over farther ones
+        for i, wk in enumerate(weeks):
+            d = next((x for x in wk["contributionDays"] if x["weekday"] == r), None)
+            if d is None:
+                continue
+            n = d["contributionCount"]
+            x0 = gx + i * pitch + (6 - r) * rx
+            yb = y_front - (6 - r) * ry
+            if n == 0:
+                out.append(f'<polygon points="{x0:.1f},{yb:.1f} {x0 + bw:.1f},{yb:.1f} {x0 + bw + ddx:.1f},{yb - ddy:.1f} '
+                           f'{x0 + ddx:.1f},{yb - ddy:.1f}" fill="#1a2029"/>')
+                continue
+            bh = 3 + hmax * (n / peak) ** 0.5
+            yt = yb - bh
+            base = LEVELS[d["contributionLevel"]]
+            out.append(
+                f'<g class="bar" style="animation-delay:{i * 0.02 + r * 0.01:.2f}s"><title>{n} on {d["date"]}</title>'
+                f'<rect x="{x0:.1f}" y="{yt:.1f}" width="{bw:.1f}" height="{bh:.1f}" fill="{base}"/>'
+                f'<polygon points="{x0 + bw:.1f},{yb:.1f} {x0 + bw + ddx:.1f},{yb - ddy:.1f} {x0 + bw + ddx:.1f},{yt - ddy:.1f} '
+                f'{x0 + bw:.1f},{yt:.1f}" fill="{shade(base, -.38)}"/>'
+                f'<polygon points="{x0:.1f},{yt:.1f} {x0 + bw:.1f},{yt:.1f} {x0 + bw + ddx:.1f},{yt - ddy:.1f} '
+                f'{x0 + ddx:.1f},{yt - ddy:.1f}" fill="{shade(base, .3)}"/></g>')
+            if n == peak and peak_at is None:
+                peak_at = (x0 + bw / 2 + ddx / 2, yt - ddy, d)
+    if peak_at:
+        px, py, d = peak_at
+        tx = min(max(px, 90), w - 90)
+        out.append(f'<path d="M{px:.1f} {py - 3:.1f}V{py - 15:.1f}" stroke="{GREEN}" stroke-width="1"/>'
+                   f'<text x="{tx:.1f}" y="{py - 21:.1f}" text-anchor="middle" font-size="11" fill="{GREEN}">'
+                   f'{peak} · {fmt_day(date.fromisoformat(d["date"]))}</text>')
     seen = None
-    for i, week in enumerate(weeks):
-        first = date.fromisoformat(week["contributionDays"][0]["date"])
-        if first.month != seen and (i < len(weeks) - 2):
+    for i, wk in enumerate(weeks):
+        first = date.fromisoformat(wk["contributionDays"][0]["date"])
+        if first.month != seen and i < len(weeks) - 2:
             seen = first.month
-            out.append(f'<text x="{gx + i * pitch}" y="{gy - 10}" font-size="11" fill="{MUTED}">{first:%b}</text>')
-        for d in week["contributionDays"]:
-            out.append(f'<rect class="fade" style="animation-delay:{i * 0.012:.2f}s" x="{gx + i * pitch}" '
-                       f'y="{gy + d["weekday"] * pitch}" width="{cell}" height="{cell}" rx="2.5" '
-                       f'fill="{LEVELS[d["contributionLevel"]]}"><title>{d["contributionCount"]} on {d["date"]}</title></rect>')
-    for wd, label in ((1, "Mon"), (3, "Wed"), (5, "Fri")):
-        out.append(f'<text x="{gx - 8}" y="{gy + wd * pitch + cell - 2}" text-anchor="end" font-size="10.5" fill="{DIM}">{label}</text>')
-    by = gy + 7 * pitch + 30
+            out.append(f'<text x="{gx + i * pitch:.1f}" y="{y_front + 20:.1f}" font-size="10.5" fill="{DIM}">{first:%b}</text>')
     count = sum(d["contributionCount"] for wk in weeks for d in wk["contributionDays"])
     label = f"{count:,} contributions in the last {'6 months' if mobile else 'year'}"
-    out.append(f'<text x="{gx}" y="{by}" font-size="12" fill="{TEXT}">{label}</text>')
-    lx = gx + grid_w - pitch - 5 * 14 - 34
-    ly = by + 24 if mobile else by
-    out.append(f'<text x="{lx - 8}" y="{ly}" text-anchor="end" font-size="10.5" fill="{DIM}">less</text>')
+    out.append(f'<text x="{gx:.1f}" y="{foot}" font-size="12" fill="{TEXT}">{label}</text>')
+    lx = gx + span - 5 * 14 - 34
+    ly = foot + 24 if mobile else foot
+    out.append(f'<text x="{lx - 8:.1f}" y="{ly}" text-anchor="end" font-size="10.5" fill="{DIM}">less</text>')
     for i, c in enumerate(LEVELS.values()):
-        out.append(f'<rect x="{lx + i * 14}" y="{ly - 10}" width="11" height="11" rx="2" fill="{c}"/>')
-    out.append(f'<text x="{lx + 5 * 14 + 4}" y="{ly}" font-size="10.5" fill="{DIM}">more</text>')
-    return svg(w, h, f"{s['name']}'s contribution heatmap", f"{label}. Each square is one day, darker to brighter green as contributions increase.", "".join(out))
+        out.append(f'<rect x="{lx + i * 14:.1f}" y="{ly - 10}" width="11" height="11" rx="2" fill="{c}"/>')
+    out.append(f'<text x="{lx + 5 * 14 + 4:.1f}" y="{ly}" font-size="10.5" fill="{DIM}">more</text>')
+    desc = (f"{label}, drawn as a 3D skyline with one bar per day. Taller, brighter bars mean more contributions"
+            + (f"; the peak is {peak} on {fmt_day(date.fromisoformat(peak_at[2]['date']))}." if peak_at else "."))
+    return svg(w, h, f"{s['name']}'s contribution skyline", desc, "".join(out))
 
 
 def tiles_block(s, x, y, w):
@@ -426,16 +465,139 @@ def languages(s, mobile):
     return svg(w, h, "Language breakdown", desc, "".join(out))
 
 
+# ── activity feed ───────────────────────────────────────────────────────────
+
+def rest(path):
+    req = urllib.request.Request("https://api.github.com" + path, headers={
+        "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "profile-dashboard",
+    })
+    with urllib.request.urlopen(req, timeout=30) as res:
+        return json.load(res)
+
+
+def fetch_pulse(login):
+    """Latest commits by `login` in their newest public, non-fork repos (the profile repo itself is skipped)."""
+    now = datetime.now(timezone.utc)
+    since = (now - timedelta(days=60)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    repos = [r for r in rest(f"/users/{login}/repos?type=owner&sort=pushed&per_page=12")
+             if not r["fork"] and r["name"].lower() != login.lower()][:8]
+    commits = []
+    for r in repos:
+        try:
+            batch = rest(f"/repos/{login}/{r['name']}/commits?author={login}&since={since}&per_page=100")
+        except urllib.error.HTTPError:             # e.g. 409 on an empty repository
+            continue
+        for c in batch:
+            msg = re.sub(r"\s*\(#\d+\)$", "", c["commit"]["message"].split("\n")[0].strip())
+            if msg and not msg.startswith("Merge "):
+                when = datetime.fromisoformat(c["commit"]["author"]["date"].replace("Z", "+00:00"))
+                commits.append({"repo": r["name"], "sha": c["sha"][:7], "msg": msg, "when": when})
+    commits.sort(key=lambda c: c["when"], reverse=True)
+    counts = {}
+    for c in commits:
+        if (now - c["when"]).days < PULSE_DAYS:
+            counts[c["repo"]] = counts.get(c["repo"], 0) + 1
+    ranked = sorted(counts.items(), key=lambda kv: -kv[1])[:5]
+    # One colour per repo, shared by the feed and the ranking, so no two repos in a run look alike.
+    colors = {}
+    for name in [n for n, _ in ranked] + [c["repo"] for c in commits[:FEED_ROWS]]:
+        colors.setdefault(name, REPO_COLORS[len(colors) % len(REPO_COLORS)])
+    return {"feed": commits[:FEED_ROWS], "ranked": ranked, "colors": colors,
+            "total": sum(counts.values()), "repos": len(counts), "now": now, "updated": now.strftime("%Y-%m-%d")}
+
+
+def ago(when, now):
+    d = (now - when).days
+    if d < 1:
+        return "today"
+    if d < 14:
+        return f"{d}d ago"
+    if d < 60:
+        return f"{d // 7}w ago"
+    return f"{d // 30}mo ago"
+
+
+def trunc(text, n):
+    return text if len(text) <= n else text[:max(1, n - 1)].rstrip() + "…"
+
+
+def pulse(p, mobile):
+    w = 480 if mobile else 1000
+    feed, ranked, now = p["feed"], p["ranked"], p["now"]
+    top, rh = 44, (28 if mobile else 30)
+    y0 = top + 28 + 28                              # baseline of the first feed row
+    n = max(len(feed), 1)
+    y_last = y0 + (n - 1) * rh
+    out = [prompt_line(w / 2, 24, f"git log --since='{PULSE_DAYS} days'", 15 if mobile else 14)]
+
+    if not feed:
+        out.append(f'<text x="24" y="{y0}" font-size="12.5" fill="{DIM}">no commits in the last 60 days</text>')
+    for i, c in enumerate(feed):
+        y = y0 + i * rh
+        label = trunc(c["repo"], 14 if mobile else 16)
+        cw = len(label) * 6.6 + 14
+        col = p["colors"][c["repo"]]
+        xc = 16 if mobile else 84
+        xm = xc + (cw + 8 if mobile else 128)          # message column
+        xd = w - 16 if mobile else 650                  # right edge of the date column
+        chars = int((xd - 64 - xm) / 8.0)
+        row = (f'<rect x="{xc}" y="{y - 13}" width="{cw:.1f}" height="19" rx="4" fill="{col}" fill-opacity=".14"/>'
+               f'<text x="{xc + 7}" y="{y}" font-size="11" fill="{col}">{esc(label)}</text>'
+               f'<text x="{xm:.1f}" y="{y}" font-size="12.5" fill="{TEXT}">{esc(trunc(c["msg"], chars))}</text>'
+               f'<text x="{xd}" y="{y}" text-anchor="end" font-size="11" fill="{DIM}">{ago(c["when"], now)}</text>')
+        if not mobile:
+            row += f'<text x="24" y="{y}" font-size="11" fill="{DIM}">{c["sha"]}</text>'
+        out.append(f'<g class="fade" style="animation-delay:{i * 0.07:.2f}s">{row}</g>')
+
+    if mobile:
+        div_y = y_last + 24
+        out.append(f'<path d="M1 {div_y}H{w - 1}" stroke="{GRID}"/>')
+        hx, hy, rx0, rw, r0, pitch_r = 16, div_y + 26, 16, w - 32, div_y + 56, 34
+    else:
+        hx, hy, rx0, rw, r0, pitch_r = 696, y0 - 8, 696, 280, y0 + 18, 42
+    out.append(f'<text x="{hx}" y="{hy}" font-size="10" letter-spacing=".8" fill="{DIM}">MOST ACTIVE · LAST {PULSE_DAYS} DAYS</text>')
+    top_count = ranked[0][1] if ranked else 1
+    for i, (name, count) in enumerate(ranked):
+        y = r0 + i * pitch_r
+        col = p["colors"][name]
+        out.append(f'<g class="fade" style="animation-delay:{0.3 + i * 0.08:.2f}s">'
+                   f'<circle cx="{rx0 + 4}" cy="{y - 4}" r="4" fill="{col}"/>'
+                   f'<text x="{rx0 + 16}" y="{y}" font-size="12.5" fill="{TEXT}">{esc(trunc(name, 20))}</text>'
+                   f'<text x="{rx0 + rw}" y="{y}" text-anchor="end" font-size="12.5" font-weight="700" fill="{col}">{count}</text>'
+                   f'<rect x="{rx0}" y="{y + 8}" width="{rw}" height="5" rx="2.5" fill="{BAR}"/>'
+                   f'<rect x="{rx0}" y="{y + 8}" width="{max(4, rw * count / top_count):.1f}" height="5" rx="2.5" fill="{col}"/></g>')
+    summary = f"{p['total']} commits · {p['repos']} repos in {PULSE_DAYS} days" if ranked else f"no commits in the last {PULSE_DAYS} days"
+    sy = (r0 + max(len(ranked) - 1, 0) * pitch_r) + 38
+    out.append(f'<text x="{rx0}" y="{sy}" font-size="12" fill="{GREEN if ranked else DIM}">{summary}</text>')
+    bottom = max(sy + 20, y_last + 20) if mobile else max(sy + 20, y_last + 22)
+    if not mobile:
+        out.append(f'<path d="M672.5 {top + 29}V{bottom - 1}" stroke="{GRID}"/>')
+    h = bottom + 2
+    out.insert(1, panel(0, top, w, h - top, "activity.log", "" if mobile else f"public repos · updated {p['updated']}"))
+    desc = ("Latest commits across public repositories: "
+            + "; ".join(f"{c['repo']}: {c['msg']} ({ago(c['when'], now)})" for c in feed) + f". {summary}.")
+    return svg(w, h, "Recent activity", desc, "".join(out))
+
+
 def main():
     login, out_dir = sys.argv[1], sys.argv[2]
     s = summarize(graphql(login))
     img = load_portrait(s["avatar"])
+    try:
+        pulse_data = fetch_pulse(login)
+    except Exception as exc:  # noqa: BLE001 - the other panels are still worth publishing
+        print(f"pulse skipped: {exc}", file=sys.stderr)
+        pulse_data = None
     files = {}
     for mobile in (False, True):
         suffix = "-mobile" if mobile else ""
         files[f"contributions{suffix}.svg"] = contributions(s, mobile)
         files[f"whoami{suffix}.svg"] = whoami(s, img, mobile)
         files[f"languages{suffix}.svg"] = languages(s, mobile)
+        if pulse_data:
+            files[f"pulse{suffix}.svg"] = pulse(pulse_data, mobile)
     os.makedirs(out_dir, exist_ok=True)
     for name, content in files.items():
         with open(os.path.join(out_dir, name), "w", encoding="utf-8") as f:

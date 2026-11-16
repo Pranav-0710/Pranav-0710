@@ -12,6 +12,8 @@ Edit the text in the settings below, run it, commit the changed files in assets/
 import math
 import os
 import random
+import textwrap
+from collections import namedtuple
 
 USER = "jey"
 NAME = "Jey Pranav"
@@ -29,8 +31,8 @@ STACK = [("LANGUAGES", "Python · TypeScript · SQL · Bash"),
          ("ML · LLM", "PyTorch · LightGBM · LoRA fine-tuning · agents"),
          ("WEB", "FastAPI · React · Next.js · Three.js"),
          ("SHIP", "Docker · GitHub Actions · Vercel · HF Spaces")]
-PROMPTS = {"prompt-now": "cat ~/now.md", "prompt-projects": "ls ~/projects --featured",
-           "prompt-stack": "cat ~/.stack", "prompt-links": "./links.sh"}
+PROMPTS = {"prompt-projects": "ls ~/projects --featured", "prompt-more": "ls ~/projects --all",
+           "prompt-links": "./links.sh"}
 FOOTER_CMD = 'echo "thanks for stopping by"'
 
 BG, BAR, BORDER, GRID = "#0d1117", "#161b22", "#30363d", "#21262d"
@@ -199,10 +201,21 @@ def footer(mobile):
 
 # ── project cards (480 x 120, shown above each project's text) ───────────────
 
+Scene = namedtuple("Scene", "title desc caption css body defs cap_x")
+
+
 def card(title, desc, caption, css, body, defs="", cap_x=18):
-    frame = (f'<rect x=".5" y=".5" width="479" height="119" rx="8" fill="{BG}" stroke="{GRID}"/>'
-             f'<text x="{cap_x}" y="21" font-size="10.5" letter-spacing=".4" fill="{DIM}">{esc(caption)}</text>')
-    return doc(480, 120, title, desc, css, frame + body, defs)
+    return Scene(title, desc, caption, css, body, defs, cap_x)
+
+
+def scene_frame(sc):
+    return (f'<rect x=".5" y=".5" width="479" height="119" rx="8" fill="{BG}" stroke="{GRID}"/>'
+            f'<text x="{sc.cap_x}" y="21" font-size="10.5" letter-spacing=".4" fill="{DIM}">{esc(sc.caption)}</text>')
+
+
+def render_card(sc):
+    """A scene as a standalone 480 x 120 SVG (the small cards in the "more projects" fold-out)."""
+    return doc(480, 120, sc.title, sc.desc, sc.css, scene_frame(sc) + sc.body, sc.defs)
 
 
 def card_reliefroute():
@@ -371,6 +384,130 @@ def card_neuro():
                 "MEG channels to character-level CTC", css, body, defs)
 
 
+# ── project panels: one wide panel per featured project ─────────────────────
+# Animated scene + one-sentence pitch + three numbers + stack. Every number comes from the
+# project's own README; edit the text here, run this script, commit the changed files in assets/.
+
+PROJECTS = [
+    dict(slug="dataengenv", folder="DataEngEnv", repo="DataEngEnv", scene=card_dataeng, title="DataEngEnv",
+         pill="Meta AI × Hugging Face OpenEnv Hackathon 2026",
+         tagline="PipelineOps Arena: a 4-stage environment where an LLM agent repairs a broken ML pipeline. "
+                 "Rewards come from running the fixed code, not from an LLM judge.",
+         metrics=[("4", "cascading stages", "schema → fairness"), ("0.25→0.38", "avg reward", "25-step GRPO run"),
+                  ("live", "Hugging Face", "Space you can try")],
+         chips=["Python", "FastAPI", "Docker", "OpenEnv", "Unsloth", "LoRA", "GRPO"], mark="LLaMA 3.1 8B fine-tune"),
+    dict(slug="dhwani-desk", folder="dhwani-desk", repo="dhwani-desk", scene=card_dhwani, title="dhwani-desk",
+         pill="Gnani AI · Great Indian AI Internship Challenge",
+         tagline="A Kannada voice helpline for civic complaints that hands danger to a person first. "
+                 "Every decision runs locally on a CPU.",
+         metrics=[("30/34", "hazards caught", "held-out test calls"), ("0.71", "department F1", "macro, up from 0.13"),
+                  ("1.5 s", "first reply", "approximate latency")],
+         chips=["Python", "FastAPI", "React", "TypeScript", "Laya"], mark="no LLM in the call"),
+    dict(slug="terrain", folder="Terrain", repo="Terrain", scene=card_terrain, title="Terrain",
+         pill="Built for the OpenAI Hackathon",
+         tagline="News intelligence on a 3D WebGL globe: compare how outlets around the world frame the same event, "
+                 "with LLM consensus and contradiction analysis.",
+         metrics=[("3D", "WebGL globe", "live events on a map"), ("GDELT", "+ RSS ingestion", "geocoded news"),
+                  ("30-day", "scenario sim", "red-team mode")],
+         chips=["Next.js", "React", "Three.js", "FastAPI", "Supabase", "PostGIS"], mark="live demo"),
+    dict(slug="neuroselect", folder="neuroselect", repo="neuroselect", scene=card_neuro, title="neuroselect",
+         pill="Research codebase · baseline stage",
+         tagline="Reproducible groundwork for non-invasive brain-to-text decoding: a character-level CTC baseline "
+                 "on public MEG data. Audits come first.",
+         metrics=[("306", "MEG channels", "public SpanishBCBL"), ("8", "real trials", "extracted, audited"),
+                  ("50 Hz", "processed rate", "from 1000 Hz MEG")],
+         chips=["Python", "PyTorch", "MNE", "NumPy", "SciPy", "pytest"], mark="no benchmark claimed"),
+]
+
+
+def wrap(text, size, width):
+    return textwrap.wrap(text, max(10, int(width / (size * 0.62))))
+
+
+def chips_flow(chips, mark, x, y, max_w, size=11, gap=8):
+    """Chips left to right, wrapping at max_w. Returns (svg, bottom y)."""
+    out, cx, cy = [], x, y
+    for label, hi in [(c, False) for c in chips] + ([(mark, True)] if mark else []):
+        cw = len(label) * size * 0.6 + 18
+        if cx + cw > x + max_w:
+            cx, cy = x, cy + 28
+        out.append(f'<rect x="{cx:.1f}" y="{cy}" width="{cw:.1f}" height="22" rx="11" fill="{GREEN if hi else BAR}" '
+                   f'fill-opacity="{.12 if hi else 1}" stroke="{GREEN if hi else BORDER}"/>'
+                   f'<text x="{cx + cw / 2:.1f}" y="{cy + 15}" text-anchor="middle" font-size="{size}" '
+                   f'fill="{GREEN if hi else MUTED}">{esc(label)}</text>')
+        cx += cw + gap
+    return "".join(out), cy + 22
+
+
+def metric_tiles(metrics, x, y, total_w, h=72, gap=12):
+    tw = (total_w - gap * (len(metrics) - 1)) / len(metrics)
+    out = []
+    for i, (val, label, sub) in enumerate(metrics):
+        tx = x + i * (tw + gap)
+        out.append(f'<g class="rv" style="animation-delay:{.45 + i * .12:.2f}s">'
+                   f'<rect x="{tx + .5:.1f}" y="{y + .5}" width="{tw - 1:.1f}" height="{h - 1}" rx="6" fill="{BAR}" stroke="{GRID}"/>'
+                   f'<text x="{tx + 14:.1f}" y="{y + 29}" font-size="{21 if len(val) <= 6 else 17}" font-weight="700" fill="{GREEN}">{esc(val)}</text>'
+                   f'<text x="{tx + 14:.1f}" y="{y + 47}" font-size="11" fill="{TEXT}">{esc(label)}</text>'
+                   f'<text x="{tx + 14:.1f}" y="{y + 62}" font-size="9.5" fill="{DIM}">{esc(sub)}</text></g>')
+    return "".join(out)
+
+
+def project_panel(spec, mobile, flip):
+    sc = spec["scene"]()
+    w = 480 if mobile else 1000
+    css = ".rv{animation:rv .7s ease-out backwards}@keyframes rv{from{opacity:0;transform:translateY(8px)}}" + sc.css
+
+    def reveal(d, inner):
+        return f'<g class="rv" style="animation-delay:{d:.2f}s">{inner}</g>'
+
+    def pill(x, y):
+        pw = len(spec["pill"]) * 6.4 + 34
+        return reveal(.1, f'<rect x="{x + .5}" y="{y + .5}" width="{pw:.1f}" height="21" rx="10.5" fill="{BAR}" stroke="{BORDER}"/>'
+                          f'<circle cx="{x + 13}" cy="{y + 11}" r="3" fill="{GREEN}"/>'
+                          f'<text x="{x + 24}" y="{y + 15}" font-size="11" fill="{MUTED}">{esc(spec["pill"])}</text>')
+
+    def title(x, y, size):
+        return reveal(.2, f'<rect x="{x}" y="{y - size * .82:.1f}" width="3" height="{size * .95:.1f}" rx="1.5" fill="{GREEN}"/>'
+                          f'<text x="{x + 14}" y="{y}" font-size="{size}" font-weight="700" fill="{TEXT}">{esc(spec["title"])}</text>')
+
+    def tagline(x, y, lines, size, step):
+        return reveal(.3, f'<g font-size="{size}" fill="{MUTED}">' + "".join(
+            f'<text x="{x}" y="{y + i * step}">{esc(t)}</text>' for i, t in enumerate(lines)) + '</g>')
+
+    def media(x, y, scale):
+        return reveal(.15, f'<g transform="translate({x},{y}) scale({scale})">{scene_frame(sc)}{sc.body}</g>')
+
+    parts = []
+    if mobile:
+        pad, cw = 16, w - 32
+        parts += [pill(pad, 46), media(pad, 80, cw / 480)]
+        ty = 80 + 120 * cw / 480 + 40
+        parts.append(title(pad, ty, 24))
+        lines = wrap(spec["tagline"], 13, cw)
+        parts.append(tagline(pad, ty + 30, lines, 13, 20))
+        ky = ty + 30 + len(lines) * 20 + 4
+        parts.append(metric_tiles(spec["metrics"], pad, ky, cw, gap=10))
+        chips_svg, bottom = chips_flow(spec["chips"], spec["mark"], pad, ky + 72 + 18, cw)
+        h = bottom + 24
+    else:
+        mx, tx = (496, 24) if flip else (24, 540)
+        col = 436
+        parts += [pill(tx, 50), title(tx, 108, 28)]
+        lines = wrap(spec["tagline"], 14, col)
+        parts.append(tagline(tx, 140, lines, 14, 21))
+        chips_svg, bottom = chips_flow(spec["chips"], spec["mark"], tx, 140 + len(lines) * 21 + 6, col)
+        parts += [media(mx, 52, 1), metric_tiles(spec["metrics"], mx, 188, 480)]
+        h = max(bottom, 260) + 28
+    parts.append(f'<g class="rv" style="animation-delay:.6s">{chips_svg}</g>')
+    h = int(math.ceil(h))
+    right = "" if mobile else f"github.com/Pranav-0710/{spec['repo']}"
+    body = chrome(0, 0, w, h, f"~/projects/{spec['folder']}", right) + "".join(parts)
+    desc = (f"{spec['title']}. {spec['tagline']} "
+            + " ".join(f"{v} {l} ({s})." for v, l, s in spec["metrics"])
+            + f" Built with {', '.join(spec['chips'])}.")
+    return doc(w, h, f"{spec['title']}: project panel", desc, css, body, sc.defs)
+
+
 def animate_buttons():
     """Give the arrow on each link button a small nudge loop. Safe to run repeatedly."""
     for name in ("btn-linkedin", "btn-email"):
@@ -393,9 +530,11 @@ def main():
         write(name + "-mobile", prompt(cmd, True))
     write("footer", footer(False))
     write("footer-mobile", footer(True))
-    for name, fn in (("reliefroute", card_reliefroute), ("dhwani-desk", card_dhwani), ("dataengenv", card_dataeng),
-                     ("signal-hunters", card_signal), ("terrain", card_terrain), ("neuroselect", card_neuro)):
-        write("card-" + name, fn())
+    for name, fn in (("reliefroute", card_reliefroute), ("signal-hunters", card_signal)):
+        write("card-" + name, render_card(fn()))
+    for i, spec in enumerate(PROJECTS):
+        write("project-" + spec["slug"], project_panel(spec, False, flip=i % 2 == 1))
+        write("project-" + spec["slug"] + "-mobile", project_panel(spec, True, flip=False))
     animate_buttons()
 
 

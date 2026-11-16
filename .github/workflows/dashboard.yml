@@ -39,7 +39,7 @@ jobs:
       - name: Prepare dist
         run: |
           mkdir -p dist
-          for f in contributions whoami languages; do
+          for f in contributions whoami languages pulse; do
             for v in "" "-mobile"; do
               if [ -f "last/$f$v.svg" ]; then cp "last/$f$v.svg" dist/; fi
             done
