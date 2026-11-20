@@ -120,6 +120,7 @@ Classifies SETI ON/OFF radio-telescope cadences into 9 classes when the training
 <p align="center">
   <a href="https://www.linkedin.com/in/jey-pranav-783761278/"><img src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/btn-linkedin.svg" height="36" alt="LinkedIn: linkedin.com/in/jey-pranav-783761278" /></a>
   &nbsp;
+  
   <a href="mailto:pranavkanth07@gmail.com"><img src="https://raw.githubusercontent.com/Pranav-0710/Pranav-0710/main/assets/btn-email.svg" height="36" alt="Email: pranavkanth07@gmail.com" /></a>
 </p>
 
